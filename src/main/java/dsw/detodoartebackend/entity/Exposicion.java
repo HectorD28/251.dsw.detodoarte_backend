@@ -6,8 +6,8 @@ package dsw.detodoartebackend.entity;
 
 /**
  *
- * @author Usuario
+ * @author hecto
  */
-public class ObraDeArte {
+public class Exposicion {
     
 }
