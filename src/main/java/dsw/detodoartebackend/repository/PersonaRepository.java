@@ -4,13 +4,14 @@
  */
 package dsw.detodoartebackend.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
-import dsw.detodoartebackend.entity.Persona;
+import dsw.detodoartebackend.entity.Personas;
 import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface PersonaRepository extends JpaRepository<Persona, Long> {
+public interface PersonaRepository extends JpaRepository<Personas, Long> {
     // Aquí puedes agregar consultas personalizadas si es necesario
     // Por ejemplo, buscar por DNI:
-    Persona findByDni(String dni);
+    boolean existsByDni(String dni);
+    boolean existsByCorreoElectronico(String correoElectronico);
 }

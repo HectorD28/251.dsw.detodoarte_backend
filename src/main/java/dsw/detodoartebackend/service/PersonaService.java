@@ -4,10 +4,11 @@
  */
 package dsw.detodoartebackend.service;
 
-import dsw.detodoartebackend.entity.Persona;
+import dsw.detodoartebackend.dto.PersonaRequest;
+import dsw.detodoartebackend.dto.PersonaResponse;
+import dsw.detodoartebackend.entity.Personas;
 import dsw.detodoartebackend.repository.PersonaRepository;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,45 +24,45 @@ public class PersonaService {
         }
     }
 
-    public List<Persona> obtenerTodasPersonas() {
-        try {
-            return personaRepository.findAll();
-        } catch (Exception e) {
-            throw new RuntimeException("Error al obtener todas las personas", e);
-        }
+    public List<PersonaResponse> obtenerTodasPersonas() {
+        return PersonaResponse.fromEntities(personaRepository.findAll());
     }
 
-    public Persona obtenerPersonaPorId(Long id) {
-        return personaRepository.findById(id)
-                .orElseThrow(() -> new PersonaNotFoundException("Persona no encontrada con id: " + id));
-    }
 
-    public Persona obtenerPersonaPorDni(String dni) {
-        Persona persona = personaRepository.findByDni(dni);
-        if (persona == null) {
-            throw new PersonaNotFoundException("Persona no encontrada con DNI: " + dni);
+    // Guardar una persona
+    public PersonaResponse guardarPersona(PersonaRequest personaRequest) {
+    try {
+        // Crear la entidad Persona a partir del DTO PersonaRequest
+        Personas persona = new Personas(
+        
+        personaRequest.getPersonaId(),
+        personaRequest.getDni(),
+        personaRequest.getNombre_completo(),
+        personaRequest.getApellido_paterno(),
+        personaRequest.getApellido_materno(),
+        personaRequest.getDireccion_residencia(),
+        personaRequest.getSexo(),
+        personaRequest.getTelefono(),
+        personaRequest.getCorreo_electronico()
+        );
+        // Verificación de existencia de DNI y correo electrónico (únicos)
+        if (personaRepository.existsByDni(persona.getDni())) {
+            throw new RuntimeException("El DNI ya está registrado en el sistema.");
         }
-        return persona;
-    }
+        if (personaRepository.existsByCorreoElectronico(persona.getCorreoElectronico())) {
+            throw new RuntimeException("El correo electrónico ya está registrado en el sistema.");
+        }
 
-    
-    //CD PARTE DEL CRUD
-    public Persona guardarPersona(Persona persona) {
-        try {
-            return personaRepository.save(persona);
-        } catch (Exception e) {
-            throw new RuntimeException("Error al guardar la persona", e);
-        }
-    }
+        Personas savedPersona = personaRepository.save(persona);
 
-    public void eliminarPersona(Long id) {
-        try {
-            if (!personaRepository.existsById(id)) {
-                throw new PersonaNotFoundException("Persona no encontrada con id: " + id);
-            }
-            personaRepository.deleteById(id);
-        } catch (Exception e) {
-            throw new RuntimeException("Error al eliminar la persona", e);
-        }
+        // Convertir la entidad guardada Persona en un DTO PersonaResponse y devolverlo
+        return PersonaResponse.fromEntity(savedPersona);
+
+    } catch (Exception e) {
+        throw new RuntimeException("Error al guardar la persona", e);  // Manejo de errores
     }
+}
+
+
+
 }
