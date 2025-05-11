@@ -4,10 +4,23 @@
  */
 package dsw.detodoartebackend.entity;
 
-/**
- *
- * @author hecto
- */
+import lombok.Data;
+import jakarta.persistence.*;
+
+@Entity  // Anotar como @Entity para que sea reconocida como una entidad JPA
+@Data
+@Table(name = "artistas")
 public class Artista {
-    
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_artista")
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "persona_id", nullable = false)
+    private Persona persona;  // Relación con la entidad Persona
+
+    // Otros campos adicionales si los tienes
 }
+
