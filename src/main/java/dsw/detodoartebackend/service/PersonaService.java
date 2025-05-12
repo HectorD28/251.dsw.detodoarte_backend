@@ -28,7 +28,6 @@ public class PersonaService {
         return PersonaResponse.fromEntities(personaRepository.findAll());
     }
 
-
     // Guardar una persona
     public PersonaResponse guardarPersona(PersonaRequest personaRequest) {
     try {

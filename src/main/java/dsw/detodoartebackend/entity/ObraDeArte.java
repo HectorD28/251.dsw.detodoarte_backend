@@ -1,48 +1,50 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 
 package dsw.detodoartebackend.entity;
 
-import lombok.Data;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import java.time.LocalDate;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Entity
 @Data
-@Table(name = "obras_de_Arte")
+@Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name="obras_de_arte")
 public class ObraDeArte {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_obra")
-    private Long id;
-
-    @Column(name = "titulo", nullable = false)
+    private Long ObraId;
+    
+    @Column(name = "titulo",nullable = false, length = 20, unique = true)
     private String titulo;
 
-    @Column(name = "fecha_realizacion")
+    @Column(name = "fecha_Realizacion", length = 255)
     private LocalDate fechaRealizacion;
 
-    @Column(name = "dimensiones")
+    @Column(name = "dimensiones", nullable = false, length = 255)
     private String dimensiones;
 
-    @ManyToOne
-    @JoinColumn(name = "id_artista", nullable = false)
-    private Artista artista;  // Relación con la entidad Artista
+    @Column(name = "id_tecnica", nullable = false, length = 255)
+    private String tecnicaId;
 
-    @ManyToOne
-    @JoinColumn(name = "id_tecnica", nullable = false)
-    private Tecnica tecnica;  // Relación con la entidad Tecnica
+    @Column(name = "id_artistas", nullable = false, length = 255)
+    private String artistaId;
 
-    @Column(name = "precio")
-    private Double precio;
+    @Column(name = "precio", length = 1)
+    private double precio;
 
-    @Column(name = "cantidad_visualizacines")
+    @Column(name = "cantidad_Visualizaciones", length = 15)
     private Integer cantidadVisualizaciones;
-
-    @Lob
-    @Column(name = "archivo")
-    private byte[] archivo;  // Para almacenar la imagen de la obra
+     
 }
+
