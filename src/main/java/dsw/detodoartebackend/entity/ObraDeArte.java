@@ -23,27 +23,27 @@ public class ObraDeArte {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_obra")
-    private Long ObraId;
+    private Integer ObraId;
     
-    @Column(name = "titulo",nullable = false, length = 20, unique = true)
+    @Column(name = "titulo")
     private String titulo;
 
-    @Column(name = "fecha_Realizacion", length = 255)
+    @Column(name = "fecha_realizacion")
     private LocalDate fechaRealizacion;
 
-    @Column(name = "dimensiones", nullable = false, length = 255)
+    @Column(name = "dimensiones")
     private String dimensiones;
 
-    @Column(name = "id_tecnica", nullable = false, length = 255)
-    private String tecnicaId;
+    @Column(name = "id_tecnica")
+    private Integer tecnicaId;
 
-    @Column(name = "id_artistas", nullable = false, length = 255)
-    private String artistaId;
+    @Column(name = "id_artista")
+    private Integer artistaId;
 
-    @Column(name = "precio", length = 1)
+    @Column(name = "precio")
     private double precio;
 
-    @Column(name = "cantidad_Visualizaciones", length = 15)
+    @Column(name = "cantidad_visualizacines")
     private Integer cantidadVisualizaciones;
      
 }

@@ -15,14 +15,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ObraDeArteRequest {
-    private Long id_obra;
+    private Integer id_obra;
     private String titulo;
-    private LocalDate fecha_Realizacion;
+    private LocalDate fecha_realizacion;
     private String dimensiones;
-    private String id_tecnica;
-    private String id_artistas;
+    private Integer id_tecnica;
+    private Integer id_artista;
     private Double precio;
-    private Integer cantidad_Visualizaciones;
+    private Integer cantidad_Visualizacines;
 }
 
 

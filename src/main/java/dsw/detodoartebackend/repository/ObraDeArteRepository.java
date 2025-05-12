@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ObraDeArteRepository extends JpaRepository<ObraDeArte, Long> {
+public interface ObraDeArteRepository extends JpaRepository<ObraDeArte, Integer> {
      boolean existsByTitulo(String titulo);
 }
 

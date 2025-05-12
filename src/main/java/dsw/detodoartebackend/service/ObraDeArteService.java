@@ -36,12 +36,12 @@ public class ObraDeArteService {
         
         obradearteRequest.getId_obra(),
         obradearteRequest.getTitulo(),
-        obradearteRequest.getFecha_Realizacion(),
+        obradearteRequest.getFecha_realizacion(),
         obradearteRequest.getDimensiones(),
         obradearteRequest.getId_tecnica(),
-        obradearteRequest.getId_artistas(),
+        obradearteRequest.getId_artista(),
         obradearteRequest.getPrecio(),
-        obradearteRequest.getCantidad_Visualizaciones()
+        obradearteRequest.getCantidad_Visualizacines()
         );
         // Verificación de existencia de DNI y correo electrónico (únicos)
         if (obradearteRepository.existsByTitulo(obradearte.getTitulo())) {
