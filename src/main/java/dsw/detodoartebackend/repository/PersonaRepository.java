@@ -10,8 +10,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PersonaRepository extends JpaRepository<Personas, Long> {
-    // Aquí puedes agregar consultas personalizadas si es necesario
-    // Por ejemplo, buscar por DNI:
+
     boolean existsByDni(String dni);
     boolean existsByCorreoElectronico(String correoElectronico);
 }
