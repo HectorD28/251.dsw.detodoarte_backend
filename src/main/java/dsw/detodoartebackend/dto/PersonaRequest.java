@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PersonaRequest {
-    private Long personaId;               // Mapeado como persona_id en la base de datos
+    private Long persona_id;               // Mapeado como persona_id en la base de datos
     private String dni;       // mapeado a apellido_paterno en la base de datos
     private String nombre_completo;       // mapeado a apellido_materno en la base de datos
     private String apellido_paterno;               // mapeado a nombre_completo

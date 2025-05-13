@@ -5,9 +5,9 @@
 
 package dsw.detodoartebackend.controller;
 
-import dsw.detodoartebackend.dto.PersonaRequest;
-import dsw.detodoartebackend.dto.PersonaResponse;
-import dsw.detodoartebackend.service.PersonaService;
+import dsw.detodoartebackend.dto.ArtistaRequest;
+import dsw.detodoartebackend.dto.ArtistaResponse;
+import dsw.detodoartebackend.service.ArtistaService;
 import dsw.detodoartebackend.utils.ErrorResponse;
 import java.util.List;
 import org.slf4j.Logger;
@@ -43,10 +43,10 @@ public class ArtistaController {
     }
     @PostMapping()
     public ResponseEntity<?> registrarArtista(@RequestBody ArtistaRequest artistaRequest) {
-        logger.info(">insert " + artistaRequest);
+        logger.info(">insert " + artistaRequest.toString());
         ArtistaResponse artistaResponse;
         try {
-            artistaResponse = artistaService.registrarArtista(artistaRequest);
+            artistaResponse = artistaService.guardarArtista(artistaRequest);
         } catch (Exception e) {
             logger.error("Error inesperado", e);
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

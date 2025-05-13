@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PersonaResponse {
-    private Long personaId;
+    private Long persona_id;
     private String dni;
     private String nombreCompleto;
     private String apellidoPaterno;
@@ -29,9 +29,9 @@ public class PersonaResponse {
 
     public static PersonaResponse fromEntity(Personas persona) {
         return PersonaResponse.builder()
-            .personaId(persona.getPersonaId())
+            .persona_id(persona.getPersona_id())
             .dni(persona.getDni())
-            .nombreCompleto(persona.getNombreCompleto())
+            .nombreCompleto(persona.getNombreCompleto()== null ? "" : persona.getNombreCompleto())
             .apellidoPaterno(persona.getApellidoPaterno() == null ? "" : persona.getApellidoPaterno())
             .apellidoMaterno(persona.getApellidoMaterno() == null ? "" : persona.getApellidoMaterno())
             .direccion(persona.getDireccion() == null ? "" : persona.getDireccion())

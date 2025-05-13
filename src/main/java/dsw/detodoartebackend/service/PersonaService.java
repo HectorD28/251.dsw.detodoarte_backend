@@ -28,13 +28,11 @@ public class PersonaService {
         return PersonaResponse.fromEntities(personaRepository.findAll());
     }
 
-    // Guardar una persona
     public PersonaResponse guardarPersona(PersonaRequest personaRequest) {
     try {
-        // Crear la entidad Persona a partir del DTO PersonaRequest
         Personas persona = new Personas(
         
-        personaRequest.getPersonaId(),
+        personaRequest.getPersona_id(),
         personaRequest.getDni(),
         personaRequest.getNombre_completo(),
         personaRequest.getApellido_paterno(),
@@ -44,7 +42,6 @@ public class PersonaService {
         personaRequest.getTelefono(),
         personaRequest.getCorreo_electronico()
         );
-        // Verificación de existencia de DNI y correo electrónico (únicos)
         if (personaRepository.existsByDni(persona.getDni())) {
             throw new RuntimeException("El DNI ya está registrado en el sistema.");
         }
@@ -52,10 +49,10 @@ public class PersonaService {
             throw new RuntimeException("El correo electrónico ya está registrado en el sistema.");
         }
 
-        Personas savedPersona = personaRepository.save(persona);
+        persona= personaRepository.save(persona);
+        
 
-        // Convertir la entidad guardada Persona en un DTO PersonaResponse y devolverlo
-        return PersonaResponse.fromEntity(savedPersona);
+        return PersonaResponse.fromEntity(persona);
 
     } catch (Exception e) {
         throw new RuntimeException("Error al guardar la persona", e);  // Manejo de errores

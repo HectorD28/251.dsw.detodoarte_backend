@@ -5,6 +5,7 @@
 
 package dsw.detodoartebackend.dto;
 
+import dsw.detodoartebackend.entity.Artista;
 import dsw.detodoartebackend.entity.Personas;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,21 +19,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ArtistaResponse {
-    private Long personaId;
-    private String dni;
-    private String nombreCompleto;
-    private String apellidoPaterno;
-    private String apellidoMaterno;
-    private String direccion;
-    private char sexo;
-    private String telefono;
-    private String correoElectronico;
+    private long id_artista;
+    private Personas persona;
+
 
     public static ArtistaResponse fromEntity(Artista artista) {
         return ArtistaResponse.builder()
-            .idArtista(artista.getId())
-            .personaId(artista.getPersona().getPersonaId())
-            .build();
+            .id_artista(artista.getId_artista())
+            .persona(artista.getPersona())
+            .build();    
     }
 
     public static List<ArtistaResponse> fromEntities(List<Artista> artistas) {
