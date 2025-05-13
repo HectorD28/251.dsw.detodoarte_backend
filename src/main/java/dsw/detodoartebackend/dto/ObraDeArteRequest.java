@@ -19,8 +19,8 @@ public class ObraDeArteRequest {
     private String titulo;
     private LocalDate fecha_realizacion;
     private String dimensiones;
-    private Integer id_tecnica;
-    private Integer id_artista;
+    private Long id_tecnica;
+    private Long id_artista;
     private Double precio;
     private Integer cantidad_Visualizacines;
 }

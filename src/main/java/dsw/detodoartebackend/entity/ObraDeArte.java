@@ -1,12 +1,7 @@
 
 package dsw.detodoartebackend.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,11 +15,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Table(name="obras_de_arte")
 public class ObraDeArte {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_obra")
     private Integer ObraId;
-    
+
     @Column(name = "titulo")
     private String titulo;
 
@@ -34,17 +30,22 @@ public class ObraDeArte {
     @Column(name = "dimensiones")
     private String dimensiones;
 
-    @Column(name = "id_tecnica")
-    private Integer tecnicaId;
+    // Relación Muchos a Uno con la técnica
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_tecnica", referencedColumnName = "id_tecnica", nullable = false)
+    private Tecnica tecnica;  // La relación con la tabla 'tecnicas'
 
-    @Column(name = "id_artista")
-    private Integer artistaId;
+    // Relación Muchos a Uno con el artista
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_artista", referencedColumnName = "id_artista", nullable = false)
+    private Artista artista;  // La relación con la tabla 'artistas'
 
     @Column(name = "precio")
     private double precio;
 
     @Column(name = "cantidad_visualizacines")
     private Integer cantidadVisualizaciones;
-     
+
 }
+
 

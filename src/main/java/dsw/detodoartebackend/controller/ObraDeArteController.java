@@ -27,7 +27,7 @@ public class ObraDeArteController {
     @Autowired
     private ObraDeArteService obradearteService;
 
-    @GetMapping
+    @GetMapping("/obtener")
     public ResponseEntity<?> obtenerTodasObras() {
         List<ObraDeArteResponse> listaObrasResponse = null;
         try {
