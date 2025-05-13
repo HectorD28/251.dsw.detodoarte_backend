@@ -4,10 +4,6 @@
  */
 package dsw.detodoartebackend.entity;
 
-/**
- *
- * @author hecto
- */
 public class Especialista {
     
 }

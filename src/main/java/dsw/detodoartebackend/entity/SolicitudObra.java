@@ -29,9 +29,9 @@ public class SolicitudObra {
     @JoinColumn(name = "id_obra")
     private ObraDeArte obra;
     
-    @ManyToOne
-    @JoinColumn(name = "id_especialista")
-    private Especialista especialista;
+    //@ManyToOne
+    //@JoinColumn(name = "id_especialista")
+    //private Especialista especialista;
     
     private String estadoObra = "PENDIENTE";
 }

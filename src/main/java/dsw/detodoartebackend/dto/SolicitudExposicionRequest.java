@@ -1,13 +1,16 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package dsw.detodoartebackend.dto;
 
-/**
- *
- * @author hecto
- */
+import java.sql.Date;
+import java.util.List;
+import lombok.Data;
+
+@Data
 public class SolicitudExposicionRequest {
-    
+    private Long idSolicitud;
+    private Long artistaId;
+    private List<Long> obraIds;
+    private Date fechaSolicitud;
+    private String estadoSolicitud = "PENDIENTE";
+    private String comentarios;
 }
