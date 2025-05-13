@@ -5,10 +5,18 @@
 
 package dsw.detodoartebackend.dto;
 
-/**
- *
- * @author Richard
- */
-public class ArtistaRequest {
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+
+public class ArtistaRequest {
+    private long id_artista;
+
+    private long persona_id;
 }

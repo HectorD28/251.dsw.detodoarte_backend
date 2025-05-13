@@ -1,14 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 
 package dsw.detodoartebackend.repository;
 
-/**
- *
- * @author Richard
- */
-public class ArtistaRespository {
 
+public interface ArtistaRespository extends JpaRepository<Artista, Long>{
+    boolean existsByPersonaId(Long personaId);
 }
