@@ -37,36 +37,35 @@ public class ArtistaService {
     }
 
 
-    @Transactional
     public ArtistaResponse guardarArtista(ArtistaRequest artistaRequest) {
         
 
-    try {
-        System.out.println("\nPRIMER PASO");
-        long persona_id = artistaRequest.getPersona_id();
-        Personas persona= personaRepository.findById(persona_id).get();
-        if(persona==null){
-            System.out.println("\nPersona con ID " + persona_id + " NO ENCONTRADO");
-            return new ArtistaResponse();
-        }
-       
-        Artista artista= new Artista(
-            artistaRequest.getId_artista(),
-            persona
-        );
-        
-        if (artistaRepository.existsById(artista.getId_artista())) {
-            throw new RuntimeException("El artista ya está registrado en el sistema.");
-        }
-        System.out.println("\nPersona con ID " + persona_id + " NO REGISTRADO EN SISTEMA");
-        artista=artistaRepository.save(artista);
-        System.out.println("\nPersona con ID " + persona_id + " GUARDADO");
+        try {
+            System.out.println("\nPRIMER PASO");
+            long persona_id = artistaRequest.getPersona_id();
+            Personas persona= personaRepository.findById(persona_id).get();
+            if(persona==null){
+                System.out.println("\nPersona con ID " + persona_id + " NO ENCONTRADO");
+                return new ArtistaResponse();
+            }
 
-        return ArtistaResponse.fromEntity(artista);
+            Artista artista= new Artista(
+                artistaRequest.getId_artista(),
+                persona
+            );
 
-    } catch (Exception e) {
-        throw new RuntimeException("Error al guardar el artista", e);  // Manejo de errores
+            if (artistaRepository.existsById(artista.getId_artista())) {
+                throw new RuntimeException("El artista ya está registrado en el sistema.");
+            }
+            System.out.println("\nPersona con ID " + persona_id + " NO REGISTRADO EN SISTEMA");
+            artista=artistaRepository.save(artista);
+            System.out.println("\nPersona con ID " + persona_id + " GUARDADO");
+
+            return ArtistaResponse.fromEntity(artista);
+
+        } catch (Exception e) {
+            throw new RuntimeException("Error al guardar el artista", e);  // Manejo de errores
+        }
     }
-}
 }
 

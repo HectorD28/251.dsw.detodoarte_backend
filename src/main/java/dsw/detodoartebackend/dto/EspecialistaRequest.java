@@ -4,10 +4,17 @@
  */
 package dsw.detodoartebackend.dto;
 
-/**
- *
- * @author Richard
- */
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class EspecialistaRequest {
-    
+  private long id_especialista;
+  private long persona_id ;
+  private long id_tecnica;
 }
