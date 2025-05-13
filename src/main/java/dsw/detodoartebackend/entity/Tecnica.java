@@ -17,15 +17,8 @@ public class Tecnica {
     @Column(name = "id_tecnica")
     private Long id;
 
-    @Column(name = "codigo", nullable = false, unique = true)
+    @Column(name = "nombre_tecnica", nullable = false, unique = true)
     private String codigo;
 
-    @Column(name = "descripcion")
-    private String descripcion;
-
-    @Column(name = "peso")
-    private Double peso;
-
-    // Otros campos si los tienes
 }
 

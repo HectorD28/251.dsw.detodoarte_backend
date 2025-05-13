@@ -19,7 +19,7 @@ public class Artista {
 
     @ManyToOne
     @JoinColumn(name = "persona_id", nullable = false)
-    private Persona persona;  // Relación con la entidad Persona
+    private Personas persona;  // Relación con la entidad Persona
 
     // Otros campos adicionales si los tienes
 }

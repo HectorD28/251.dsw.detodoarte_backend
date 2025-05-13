@@ -1,25 +1,31 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 
 package dsw.detodoartebackend.entity;
 
-import lombok.Data;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import java.time.LocalDate;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Entity
 @Data
-@Table(name = "obras_de_Arte")
+@Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name="obras_de_arte")
 public class ObraDeArte {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_obra")
-    private Long id;
-
-    @Column(name = "titulo", nullable = false)
+    private Integer ObraId;
+    
+    @Column(name = "titulo")
     private String titulo;
 
     @Column(name = "fecha_realizacion")
@@ -28,21 +34,17 @@ public class ObraDeArte {
     @Column(name = "dimensiones")
     private String dimensiones;
 
-    @ManyToOne
-    @JoinColumn(name = "id_artista", nullable = false)
-    private Artista artista;  // Relación con la entidad Artista
+    @Column(name = "id_tecnica")
+    private Integer tecnicaId;
 
-    @ManyToOne
-    @JoinColumn(name = "id_tecnica", nullable = false)
-    private Tecnica tecnica;  // Relación con la entidad Tecnica
+    @Column(name = "id_artista")
+    private Integer artistaId;
 
     @Column(name = "precio")
-    private Double precio;
+    private double precio;
 
     @Column(name = "cantidad_visualizacines")
     private Integer cantidadVisualizaciones;
-
-    @Lob
-    @Column(name = "archivo")
-    private byte[] archivo;  // Para almacenar la imagen de la obra
+     
 }
+
