@@ -31,5 +31,10 @@ public class Especialista {
     @JoinColumn(name = "id_tecnica",referencedColumnName="id_tecnica", nullable = false)
     private Tecnica tecnica; 
     
+    public Especialista(Personas persona, Tecnica tecnica) {
+    this.persona = persona;
+    this.tecnica = tecnica;
+}
+    
 }
 

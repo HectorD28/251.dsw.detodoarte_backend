@@ -48,6 +48,21 @@ public class Personas {
     @Column(name = "correo_electronico", nullable = false, length = 100, unique = true)
     private String correoElectronico;
     
+    @Column(name = "contrasena", nullable = false, length = 100, unique = false)
+    private String contrasena;
+    
+    public Personas(String dni, String nombre_completo, String apellido_paterno,String apellido_materno,
+            String direccion, char sexo, String telefono, String correoElectronico, String contrasena){
+        this.dni = dni;
+        this.nombreCompleto = nombre_completo;
+        this.apellidoPaterno = apellido_paterno;
+        this.apellidoMaterno = apellido_materno;
+        this.direccion = direccion;
+        this.sexo = sexo;
+        this.telefono = telefono;
+        this.correoElectronico = correoElectronico;
+        this.contrasena = contrasena;
+    }
 
 }
 

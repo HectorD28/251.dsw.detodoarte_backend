@@ -31,16 +31,15 @@ public class PersonaService {
     public PersonaResponse guardarPersona(PersonaRequest personaRequest) {
     try {
         Personas persona = new Personas(
-        
-        personaRequest.getPersona_id(),
-        personaRequest.getDni(),
-        personaRequest.getNombre_completo(),
-        personaRequest.getApellido_paterno(),
-        personaRequest.getApellido_materno(),
-        personaRequest.getDireccion_residencia(),
-        personaRequest.getSexo(),
-        personaRequest.getTelefono(),
-        personaRequest.getCorreo_electronico()
+            personaRequest.getDni(),
+            personaRequest.getNombre_completo(),
+            personaRequest.getApellido_paterno(),
+            personaRequest.getApellido_materno(),
+            personaRequest.getDireccion_residencia(),
+            personaRequest.getSexo(),
+            personaRequest.getTelefono(),
+            personaRequest.getCorreo_electronico(),
+            personaRequest.getContrasena()
         );
         if (personaRepository.existsByDni(persona.getDni())) {
             throw new RuntimeException("El DNI ya está registrado en el sistema.");

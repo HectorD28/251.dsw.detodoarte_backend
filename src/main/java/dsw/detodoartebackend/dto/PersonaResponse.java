@@ -26,7 +26,8 @@ public class PersonaResponse {
     private char sexo;
     private String telefono;
     private String correoElectronico;
-
+    private String contrasena;
+    
     public static PersonaResponse fromEntity(Personas persona) {
         return PersonaResponse.builder()
             .persona_id(persona.getPersona_id())
@@ -37,7 +38,8 @@ public class PersonaResponse {
             .direccion(persona.getDireccion() == null ? "" : persona.getDireccion())
             .sexo(persona.getSexo())
             .telefono(persona.getTelefono())
-            .correoElectronico(persona.getCorreoElectronico())
+            .correoElectronico(persona.getCorreoElectronico()== null ? "" : persona.getDireccion())
+            .contrasena(persona.getContrasena()== null ? "" : persona.getDireccion())
             .build();
     }
 

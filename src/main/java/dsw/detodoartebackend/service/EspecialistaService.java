@@ -24,8 +24,8 @@ public class EspecialistaService {
     @Autowired
     private TecnicaRepository tecnicaRepository;
     
-    public class ArtistaNotFoundException extends RuntimeException {
-        public ArtistaNotFoundException(String message) {
+    public class EspecialistaNotFoundException extends RuntimeException {
+        public EspecialistaNotFoundException(String message) {
             super(message);
         }
     }
@@ -58,7 +58,6 @@ public class EspecialistaService {
             
 
             Especialista especialista= new Especialista(
-                especialistaRequest.getId_especialista(),
                 persona,
                 tecnica
             );

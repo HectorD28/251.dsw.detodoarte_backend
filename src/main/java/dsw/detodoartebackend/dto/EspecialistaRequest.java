@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EspecialistaRequest {
-  private long id_especialista;
+  //private long id_especialista;
   private long persona_id ;
   private long id_tecnica;
 }
