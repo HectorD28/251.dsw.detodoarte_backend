@@ -15,6 +15,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ArtistaRequest {
-    private long id_artista;
+    //private long id_artista;
     private long persona_id;
 }

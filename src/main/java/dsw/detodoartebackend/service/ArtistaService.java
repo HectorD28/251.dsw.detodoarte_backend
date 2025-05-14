@@ -43,6 +43,8 @@ public class ArtistaService {
         try {
             System.out.println("\nPRIMER PASO");
             long persona_id = artistaRequest.getPersona_id();
+            //System.out.println("\n"+persona_id);
+
             Personas persona= personaRepository.findById(persona_id).get();
             if(persona==null){
                 System.out.println("\nPersona con ID " + persona_id + " NO ENCONTRADO");
@@ -50,13 +52,12 @@ public class ArtistaService {
             }
 
             Artista artista= new Artista(
-                artistaRequest.getId_artista(),
                 persona
             );
-
-            if (artistaRepository.existsById(artista.getId_artista())) {
-                throw new RuntimeException("El artista ya está registrado en el sistema.");
-            }
+            System.out.println("\nPersona con ID " + artista.getId_artista() + " NO REGISTRADO EN SISTEMA");
+            //if (artistaRepository.existsById(artista.getId_artista())) {
+              //  throw new RuntimeException("El artista ya está registrado en el sistema.");
+            //}
             System.out.println("\nPersona con ID " + persona_id + " NO REGISTRADO EN SISTEMA");
             artista=artistaRepository.save(artista);
             System.out.println("\nPersona con ID " + persona_id + " GUARDADO");

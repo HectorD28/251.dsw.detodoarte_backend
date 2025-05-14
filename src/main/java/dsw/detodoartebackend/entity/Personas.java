@@ -47,7 +47,8 @@ public class Personas {
 
     @Column(name = "correo_electronico", nullable = false, length = 100, unique = true)
     private String correoElectronico;
-     
+    
+
 }
 
 

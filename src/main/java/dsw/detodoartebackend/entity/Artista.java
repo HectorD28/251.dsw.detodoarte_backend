@@ -19,9 +19,12 @@ public class Artista {
     @Column(name = "id_artista")
     private Long id_artista;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
     @JoinColumn(name = "persona_id",referencedColumnName="persona_id", unique = true)
     private Personas persona; 
 
+    public Artista(Personas persona){
+        this.persona=persona;
+    };
     
 }
