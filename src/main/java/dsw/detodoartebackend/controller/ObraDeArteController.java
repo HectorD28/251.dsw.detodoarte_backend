@@ -27,7 +27,7 @@ public class ObraDeArteController {
     @Autowired
     private ObraDeArteService obradearteService;
 
-    @GetMapping
+    @GetMapping("/obtener")
     public ResponseEntity<?> obtenerTodasObras() {
         List<ObraDeArteResponse> listaObrasResponse = null;
         try {
@@ -45,6 +45,9 @@ public class ObraDeArteController {
         logger.info(">insert " + obraRequest.toString());
         ObraDeArteResponse obraResponse;
         try{
+            if (obraRequest.getId_obra() != null) {
+                 throw new IllegalArgumentException("El ID no debe ser proporcionado al crear una nueva obra.");
+            }   
             obraResponse=obradearteService.guardarObra(obraRequest);
             
         }catch(Exception e){

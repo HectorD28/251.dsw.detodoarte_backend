@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dsw.detodoartebackend.dto;
 
 import dsw.detodoartebackend.entity.ObraDeArte;
@@ -22,8 +18,8 @@ public class ObraDeArteResponse {
     private String titulo;
     private LocalDate fechaRealizacion;
     private String dimensiones;
-    private Integer tecnicaId;
-    private Integer artistaId;
+    private Long tecnicaId;  // ID de la técnica
+    private Long artistaId;  // ID del artista
     private Double precio;
     private Integer cantidadVisualizacines;
 
@@ -33,8 +29,8 @@ public class ObraDeArteResponse {
             .titulo(obradearte.getTitulo())
             .fechaRealizacion(obradearte.getFechaRealizacion())
             .dimensiones(obradearte.getDimensiones())
-            .tecnicaId(obradearte.getTecnicaId())
-            .artistaId(obradearte.getArtistaId())
+            .tecnicaId(obradearte.getTecnica().getId()) // Acceso a la técnica asociada
+            .artistaId(obradearte.getArtista().getId_artista()) // Acceso al artista asociado
             .precio(obradearte.getPrecio())
             .cantidadVisualizacines(obradearte.getCantidadVisualizaciones())
             .build();
@@ -46,6 +42,3 @@ public class ObraDeArteResponse {
                 .collect(Collectors.toList());
     }
 }
-
-
-

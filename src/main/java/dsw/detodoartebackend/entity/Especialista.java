@@ -23,11 +23,11 @@ public class Especialista {
     @Column(name = "id_especialista")
     private Long id_especialista;
     
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
     @JoinColumn(name = "persona_id",referencedColumnName="persona_id", unique = true)
     private Personas persona; 
     
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
     @JoinColumn(name = "id_tecnica",referencedColumnName="id_tecnica", nullable = false)
     private Tecnica tecnica; 
     
