@@ -56,4 +56,9 @@ public class ObraDeArteService {
         // Devolver la respuesta
         return ObraDeArteResponse.fromEntity(savedObra);
     }
+
+    public List<ObraDeArteResponse> obtenerObrasPorArtista(Long idArtista) {
+        return ObraDeArteResponse.fromEntities(obradearteRepository.findByArtista_IdArtista(idArtista));
+    }
+    
 }

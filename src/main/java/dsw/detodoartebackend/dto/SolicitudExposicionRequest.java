@@ -11,5 +11,5 @@ import lombok.Data;
 public class SolicitudExposicionRequest {
     private Long artistaId;
     private String comentarios;
-    //private List<Long> obraIds;
+    private List<Long> obraIds;
 }

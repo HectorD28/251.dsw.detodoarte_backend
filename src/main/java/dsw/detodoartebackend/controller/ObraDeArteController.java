@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,6 +41,13 @@ public class ObraDeArteController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorResponse.builder().message("Obra not found").build());
         return ResponseEntity.ok(listaObrasResponse); 
     }
+
+    @GetMapping("/artista/{idArtista}")
+    public ResponseEntity<List<ObraDeArteResponse>> obtenerObrasPorArtista(@PathVariable Long idArtista) {
+        List<ObraDeArteResponse> obras = obradearteService.obtenerObrasPorArtista(idArtista);
+        return ResponseEntity.ok(obras);
+    }
+
     @PostMapping("/subir")
     public ResponseEntity<?> insertObra(@RequestBody ObraDeArteRequest obraRequest){
         logger.info(">insert " + obraRequest.toString());

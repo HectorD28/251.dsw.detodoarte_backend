@@ -19,7 +19,7 @@ public class ObraDeArte {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_obra")
-    private Integer ObraId;
+    private Long ObraId;
 
     @Column(name = "titulo")
     private String titulo;

@@ -13,8 +13,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ObraDeArteRepository extends JpaRepository<ObraDeArte, Integer> {
+public interface ObraDeArteRepository extends JpaRepository<ObraDeArte, Long> {
      boolean existsByTitulo(String titulo);
-     // List<ObraDeArte> findByArtistaId(Integer artistaId);
+     // List<ObraDeArte> findByArtistaId(Long artistaId);
+     List<ObraDeArte> findByArtista_IdArtista(Long id_artista);
 }
 

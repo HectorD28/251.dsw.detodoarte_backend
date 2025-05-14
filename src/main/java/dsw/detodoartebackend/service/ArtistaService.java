@@ -54,7 +54,7 @@ public class ArtistaService {
             Artista artista= new Artista(
                 persona
             );
-            System.out.println("\nPersona con ID " + artista.getId_artista() + " NO REGISTRADO EN SISTEMA");
+            System.out.println("\nPersona con ID " + artista.getIdArtista() + " NO REGISTRADO EN SISTEMA");
             //if (artistaRepository.existsById(artista.getId_artista())) {
               //  throw new RuntimeException("El artista ya está registrado en el sistema.");
             //}

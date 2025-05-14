@@ -9,8 +9,10 @@ import lombok.Data;
 @Data
 public class SolicitudExposicionResponse {
     private Long idSolicitud;
-    private Long artistaId;
-    // private List<Long> obraIds;
+    // private Long artistaId;
+    private String nombre;
+    private String apellido;
+    private List<Long> obraIds;
     private Date fechaSolicitud;
     private String estadoSolicitud;
     private String comentarios;
@@ -18,7 +20,7 @@ public class SolicitudExposicionResponse {
     public static SolicitudExposicionResponse fromEntity(SolicitudExposicion solicitud) {
         SolicitudExposicionResponse response = new SolicitudExposicionResponse();
         response.setIdSolicitud(solicitud.getIdSolicitud());
-        response.setArtistaId(solicitud.getArtista().getId_artista());
+        // response.setArtistaId(solicitud.getArtista().getId_artista());
         // Si tu entidad tiene la lista de obras, mapea sus IDs:
         /*if (solicitud.getObras() != null) {
             response.setObraIds(
@@ -27,11 +29,23 @@ public class SolicitudExposicionResponse {
                     .toList()
             );
         }*/
+        response.setNombre(solicitud.getArtista().getPersona().getNombreCompleto());
+        response.setApellido(solicitud.getArtista().getPersona().getApellidoPaterno() + " " +
+                solicitud.getArtista().getPersona().getApellidoMaterno());
         if (solicitud.getFechaSolicitud() != null) {
             response.setFechaSolicitud(Date.valueOf(solicitud.getFechaSolicitud().toLocalDate()));
         }
         response.setEstadoSolicitud(solicitud.getEstadoSolicitud());
         response.setComentarios(solicitud.getComentarios());
+        // Mapea los IDs de las obras asociadas
+        if (solicitud.getObras() != null) {
+            response.setObraIds(
+                solicitud.getObras().stream()
+                    .filter(so -> so != null && so.getObra() != null)
+                    .map(so -> so.getObra().getObraId())
+                    .toList()
+            );
+        }
         return response;
     }
 }

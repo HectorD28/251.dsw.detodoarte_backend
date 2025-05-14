@@ -17,7 +17,7 @@ public class Artista {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_artista")
-    private Long id_artista;
+    private Long idArtista;
 
     @OneToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
     @JoinColumn(name = "persona_id",referencedColumnName="persona_id", unique = true)

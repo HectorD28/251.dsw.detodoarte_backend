@@ -25,7 +25,7 @@ public class ArtistaResponse {
 
     public static ArtistaResponse fromEntity(Artista artista) {
         return ArtistaResponse.builder()
-            .id_artista(artista.getId_artista())
+            .id_artista(artista.getIdArtista())
             .persona(artista.getPersona())
             .build();    
     }

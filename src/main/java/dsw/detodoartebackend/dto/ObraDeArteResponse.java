@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ObraDeArteResponse {
-    private Integer ObraId;
+    private Long ObraId;
     private String titulo;
     private LocalDate fechaRealizacion;
     private String dimensiones;
@@ -30,7 +30,7 @@ public class ObraDeArteResponse {
             .fechaRealizacion(obradearte.getFechaRealizacion())
             .dimensiones(obradearte.getDimensiones())
             .tecnicaId(obradearte.getTecnica().getId()) // Acceso a la técnica asociada
-            .artistaId(obradearte.getArtista().getId_artista()) // Acceso al artista asociado
+            .artistaId(obradearte.getArtista().getIdArtista()) // Acceso al artista asociado
             .precio(obradearte.getPrecio())
             .cantidadVisualizacines(obradearte.getCantidadVisualizaciones())
             .build();
