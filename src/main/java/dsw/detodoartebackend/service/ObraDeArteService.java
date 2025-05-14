@@ -7,7 +7,7 @@ import dsw.detodoartebackend.entity.Tecnica;
 import dsw.detodoartebackend.entity.Artista;
 import dsw.detodoartebackend.repository.ObraDeArteRepository;
 import dsw.detodoartebackend.repository.TecnicaRepository;
-import dsw.detodoartebackend.repository.ArtistaRespository;
+import dsw.detodoartebackend.repository.ArtistaRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ public class ObraDeArteService {
     private TecnicaRepository tecnicaRepository;
 
     @Autowired
-    private ArtistaRespository artistaRepository;
+    private ArtistaRepository artistaRepository;
 
     public List<ObraDeArteResponse> obtenerTodasObras() {
         return ObraDeArteResponse.fromEntities(obradearteRepository.findAll());

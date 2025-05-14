@@ -94,6 +94,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+                                        <mainClass>dsw.detodoartebackend.Application</mainClass>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
@@ -102,7 +103,6 @@
 					</excludes>
 				</configuration>
 			</plugin>
-		</plugins>
+                </plugins>
 	</build>
-
 </project>

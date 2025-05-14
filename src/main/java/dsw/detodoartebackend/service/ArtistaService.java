@@ -10,7 +10,7 @@ import dsw.detodoartebackend.dto.PersonaRequest;
 import dsw.detodoartebackend.dto.PersonaResponse;
 import dsw.detodoartebackend.entity.Artista;
 import dsw.detodoartebackend.entity.Personas;
-import dsw.detodoartebackend.repository.ArtistaRespository;
+import dsw.detodoartebackend.repository.ArtistaRepository;
 import dsw.detodoartebackend.repository.PersonaRepository;
 import jakarta.transaction.Transactional;
 import java.util.List;
@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
 public class ArtistaService {
 
     @Autowired
-    private ArtistaRespository artistaRepository;
+    private ArtistaRepository artistaRepository;
     
     @Autowired
     private PersonaRepository personaRepository;

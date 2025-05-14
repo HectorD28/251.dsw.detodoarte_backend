@@ -10,8 +10,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
+
+import dsw.detodoartebackend.dto.SolicitudExposicionRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -36,10 +38,15 @@ public class SolicitudExposicion {
     private List<SolicitudObra> obras; // Relación 1:N
     
     @Column(nullable = false, updatable = false)
-    private Date fechaSolicitud;
+    private LocalDateTime fechaSolicitud = LocalDateTime.now();
     
     @Column(nullable = false)
     private String estadoSolicitud = "PENDIENTE";
     
     private String comentarios;
+
+    public static SolicitudExposicion fromRequest(SolicitudExposicionRequest request) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'fromRequest'");
+    }
 }
