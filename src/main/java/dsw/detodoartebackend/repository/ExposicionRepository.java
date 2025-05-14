@@ -4,10 +4,13 @@
  */
 package dsw.detodoartebackend.repository;
 
-/**
- *
- * @author Usuario
- */
-public class ExposicionRepository {
+import dsw.detodoartebackend.entity.Exposicion;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+
+@Repository
+public interface ExposicionRepository extends JpaRepository<Exposicion, Long> { 
     
 }
+

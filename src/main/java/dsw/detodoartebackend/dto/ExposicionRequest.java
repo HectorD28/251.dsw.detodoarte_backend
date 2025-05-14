@@ -4,10 +4,23 @@
  */
 package dsw.detodoartebackend.dto;
 
-/**
- *
- * @author Usuario
- */
+import java.time.LocalDate;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ExposicionRequest {
+
+    private Long id_exposicion;
+    private String nombre;
+    private String descripcion;
+    private LocalDate fecha_inicio;
+    private LocalDate fecha_fin; 
+    private String tipo_exposicion;
     
 }
