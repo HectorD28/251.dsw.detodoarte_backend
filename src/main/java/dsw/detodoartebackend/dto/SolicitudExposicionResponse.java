@@ -41,7 +41,13 @@ public class SolicitudExposicionResponse {
         if (solicitud.getObras() != null) {
             response.setObraIds(
                 solicitud.getObras().stream()
-                    .filter(so -> so != null && so.getObra() != null)
+                    .filter(so -> {
+                        if (so == null || so.getObra() == null) {
+                            System.out.println("SolicitudObra o su obra es null");
+                            return false;
+                        }
+                        return true;
+                    })
                     .map(so -> so.getObra().getObraId())
                     .toList()
             );

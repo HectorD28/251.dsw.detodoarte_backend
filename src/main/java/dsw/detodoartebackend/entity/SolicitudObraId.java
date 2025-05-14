@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SolicitudObraId implements Serializable {
-    private SolicitudExposicion solicitud;
-    private ObraDeArte obra;
+    private Long solicitud;
+    private Long obra;
 }

@@ -2,6 +2,7 @@ package dsw.detodoartebackend.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,7 +60,7 @@ public class SolicitudExposicionService {
                     .obra(obra)
                     .estadoObra("PENDIENTE")
                     .build())
-                .toList();
+                .collect(Collectors.toList()); ;
 
             solicitudObraRepository.saveAll(solicitudObras);
             System.out.println("SolicitudObra guardadas: " + solicitudObras.size());
