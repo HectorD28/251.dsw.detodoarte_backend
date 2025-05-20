@@ -14,8 +14,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ObraDeArteService {
+
     @Autowired
-    private ObraDeArteRepository obradearteRepository;
+    private ObraDeArteRepository obraRepository;
 
     @Autowired
     private TecnicaRepository tecnicaRepository;
@@ -24,41 +25,91 @@ public class ObraDeArteService {
     private ArtistaRepository artistaRepository;
 
     public List<ObraDeArteResponse> obtenerTodasObras() {
-        return ObraDeArteResponse.fromEntities(obradearteRepository.findAll());
+        return ObraDeArteResponse.fromEntities(obraRepository.findAll());
     }
 
-    public ObraDeArteResponse guardarObra(ObraDeArteRequest obraRequest) {
-        // Verificar si el título ya existe
-        if (obradearteRepository.existsByTitulo(obraRequest.getTitulo())) {
-            throw new RuntimeException("El título ya existe");
-        }
-
-        // Buscar la técnica y el artista a partir de los IDs recibidos
-        Tecnica tecnica = tecnicaRepository.findById(obraRequest.getId_tecnica())
-                .orElseThrow(() -> new RuntimeException("Técnica no encontrada"));
-
-        Artista artista = artistaRepository.findById(obraRequest.getId_artista())
-                .orElseThrow(() -> new RuntimeException("Artista no encontrado"));
-
-        // Crear la entidad ObraDeArte
-        ObraDeArte obraDeArte = new ObraDeArte();
-        obraDeArte.setTitulo(obraRequest.getTitulo());
-        obraDeArte.setFechaRealizacion(obraRequest.getFecha_realizacion());
-        obraDeArte.setDimensiones(obraRequest.getDimensiones());
-        obraDeArte.setTecnica(tecnica); // Asignar la técnica
-        obraDeArte.setArtista(artista); // Asignar el artista
-        obraDeArte.setPrecio(obraRequest.getPrecio());
-        obraDeArte.setCantidadVisualizaciones(obraRequest.getCantidad_Visualizacines());
-
-        // Guardar la obra de arte
-        ObraDeArte savedObra = obradearteRepository.save(obraDeArte);
-
-        // Devolver la respuesta
-        return ObraDeArteResponse.fromEntity(savedObra);
+    public ObraDeArteResponse obtenerObraPorId(Long id) {
+        ObraDeArte obra = obraRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Obra no encontrada con ID " + id));
+        return ObraDeArteResponse.fromEntity(obra);
     }
 
     public List<ObraDeArteResponse> obtenerObrasPorArtista(Long idArtista) {
-        return ObraDeArteResponse.fromEntities(obradearteRepository.findByArtista_IdArtista(idArtista));
+        return ObraDeArteResponse.fromEntities(obraRepository.findByArtista_IdArtista(idArtista));
     }
-    
+
+    public ObraDeArteResponse guardarObra(ObraDeArteRequest request) {
+        if (obraRepository.existsByTitulo(request.getTitulo())) {
+            throw new RuntimeException("El título ya existe");
+        }
+
+        Tecnica tecnica = tecnicaRepository.findById(request.getId_tecnica())
+                .orElseThrow(() -> new RuntimeException("Técnica no encontrada"));
+        Artista artista = artistaRepository.findById(request.getId_artista())
+                .orElseThrow(() -> new RuntimeException("Artista no encontrado"));
+
+        ObraDeArte obra = ObraDeArte.builder()
+                .titulo(request.getTitulo())
+                .fechaRealizacion(request.getFecha_realizacion())
+                .dimensiones(request.getDimensiones())
+                .tecnica(tecnica)
+                .artista(artista)
+                .precio(request.getPrecio())
+                .cantidadVisualizaciones(0) // Inicializamos en cero
+                .build();
+
+        ObraDeArte saved = obraRepository.save(obra);
+        return ObraDeArteResponse.fromEntity(saved);
+    }
+
+    public ObraDeArteResponse actualizarObra(Long id, ObraDeArteRequest request) {
+        ObraDeArte obraExistente = obraRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Obra no encontrada con ID " + id));
+
+        // Si el título cambia, verificamos duplicados
+        if (!obraExistente.getTitulo().equals(request.getTitulo()) &&
+                obraRepository.existsByTitulo(request.getTitulo())) {
+            throw new RuntimeException("El título ya existe");
+        }
+
+        Tecnica tecnica = tecnicaRepository.findById(request.getId_tecnica())
+                .orElseThrow(() -> new RuntimeException("Técnica no encontrada"));
+        Artista artista = artistaRepository.findById(request.getId_artista())
+                .orElseThrow(() -> new RuntimeException("Artista no encontrado"));
+
+        // Actualizamos campos
+        obraExistente.setTitulo(request.getTitulo());
+        obraExistente.setFechaRealizacion(request.getFecha_realizacion());
+        obraExistente.setDimensiones(request.getDimensiones());
+        obraExistente.setTecnica(tecnica);
+        obraExistente.setArtista(artista);
+        obraExistente.setPrecio(request.getPrecio());
+        // No permitimos modificar cantidad de visualizaciones desde aquí
+
+        ObraDeArte updated = obraRepository.save(obraExistente);
+        return ObraDeArteResponse.fromEntity(updated);
+    }
+
+    public void eliminarObra(Long id) {
+        ObraDeArte obra = obraRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Obra no encontrada con ID " + id));
+        
+        // Aquí debes agregar lógica para validar si la obra está en exposición o vendida
+        // Ejemplo simplificado (supongamos tienes un campo estado, por ahora omito):
+        /*
+        if (obra.getEstado().equals("En exposición") || obra.getEstado().equals("Vendida")) {
+            throw new RuntimeException("No se puede eliminar obra en exposición o vendida");
+        }
+        */
+
+        obraRepository.delete(obra);
+    }
+
+    // Método para incrementar visualizaciones (puedes usarlo cuando un usuario vea la obra)
+    public void incrementarVisualizaciones(Long id) {
+        ObraDeArte obra = obraRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Obra no encontrada con ID " + id));
+        obra.setCantidadVisualizaciones(obra.getCantidadVisualizaciones() + 1);
+        obraRepository.save(obra);
+    }
 }

@@ -4,10 +4,9 @@
  */
 package dsw.detodoartebackend.entity;
 
-/**
- *
- * @author Usuario
- */
+
+
 public class ObrasExposicion {
-    
+
+
 }
