@@ -45,6 +45,9 @@ public class ObraDeArte {
 
     @Column(name = "cantidad_visualizacines")
     private Integer cantidadVisualizaciones;
+    
+    @Column(name = "ruta_imagen")  // opcional, para especificar el nombre de columna
+    private String rutaImagen;
 
 }
 

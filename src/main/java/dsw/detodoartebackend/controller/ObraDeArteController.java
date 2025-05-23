@@ -8,6 +8,7 @@ import dsw.detodoartebackend.dto.ObraDeArteRequest;
 import dsw.detodoartebackend.dto.ObraDeArteResponse;
 import dsw.detodoartebackend.service.ObraDeArteService;
 import dsw.detodoartebackend.utils.ErrorResponse;
+import java.io.IOException;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +22,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/obras")
@@ -116,6 +119,23 @@ public class ObraDeArteController {
         } catch (Exception e) {
             logger.error("Error inesperado", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    @PostMapping("/{id}/imagen")
+    public ResponseEntity<?> subirImagen(@PathVariable Long id, @RequestParam("file") MultipartFile file) {
+        try {
+            ObraDeArteResponse obraActualizada = obradearteService.actualizarRutaImagen(id, file);
+            return ResponseEntity.ok(obraActualizada);
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Error al subir la imagen: " + e.getMessage());
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error inesperado");
         }
     }
 }

@@ -24,6 +24,7 @@ public class ObraDeArteResponse {
     private Artista artistaId;  // ID del artista
     private Double precio;
     private Integer cantidadVisualizacines;
+    private String rutaImagen;
 
     public static ObraDeArteResponse fromEntity(ObraDeArte obradearte) {
         return ObraDeArteResponse.builder()
@@ -35,6 +36,7 @@ public class ObraDeArteResponse {
             .artistaId(obradearte.getArtista()) // Acceso al artista asociado
             .precio(obradearte.getPrecio())
             .cantidadVisualizacines(obradearte.getCantidadVisualizaciones())
+            .rutaImagen(obradearte.getRutaImagen())
             .build();
     }
 

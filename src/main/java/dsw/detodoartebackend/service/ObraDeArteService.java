@@ -8,9 +8,17 @@ import dsw.detodoartebackend.entity.Artista;
 import dsw.detodoartebackend.repository.ObraDeArteRepository;
 import dsw.detodoartebackend.repository.TecnicaRepository;
 import dsw.detodoartebackend.repository.ArtistaRepository;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
 
 @Service
 public class ObraDeArteService {
@@ -111,5 +119,34 @@ public class ObraDeArteService {
                 .orElseThrow(() -> new RuntimeException("Obra no encontrada con ID " + id));
         obra.setCantidadVisualizaciones(obra.getCantidadVisualizaciones() + 1);
         obraRepository.save(obra);
+    }
+    
+        private final String carpetaUploads = "uploads/obras/";
+
+    // Método para guardar la imagen en disco y devolver el nombre generado
+    public String guardarImagen(MultipartFile archivo) throws IOException {
+        if (archivo.isEmpty()) {
+            throw new IOException("Archivo vacío");
+        }
+        File carpeta = new File(carpetaUploads);
+        if (!carpeta.exists()) {
+            carpeta.mkdirs();
+        }
+        String nombreArchivo = System.currentTimeMillis() + "_" + archivo.getOriginalFilename();
+        Path rutaArchivo = Paths.get(carpetaUploads, nombreArchivo);
+        Files.write(rutaArchivo, archivo.getBytes());
+        return nombreArchivo;
+    }
+
+    // Método para actualizar solo la ruta de imagen de la obra
+    public ObraDeArteResponse actualizarRutaImagen(Long id, MultipartFile archivo) throws IOException {
+        ObraDeArte obra = obraRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Obra no encontrada con ID " + id));
+
+        String nombreArchivo = guardarImagen(archivo);
+        obra.setRutaImagen(nombreArchivo);
+        obraRepository.save(obra);
+
+        return ObraDeArteResponse.fromEntity(obra);
     }
 }
