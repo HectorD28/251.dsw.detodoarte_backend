@@ -7,16 +7,19 @@ import dsw.detodoartebackend.entity.Personas;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 import java.util.Optional;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 
 @Repository
 public interface PersonaRepository extends JpaRepository<Personas, Long> {
-    UserDetails findByUsername(String username);
+    @Query("SELECT p FROM Personas p WHERE p.correoElectronico = :username")
+    UserDetails findByUsername(@Param("username") String username);
     boolean existsByDni(String dni);
     boolean existsByCorreoElectronico(String correoElectronico);
     List<Personas> findByEstadoTrue();
-    Optional<Personas> findByDni(Long dni);
-    Optional<Personas> findByDniAndEstadoTrue(Long dni);
+    Optional<Personas> findByDni(String dni);
+    Optional<Personas> findByDniAndEstadoTrue(String dni);
 
 
 }
