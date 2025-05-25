@@ -1,5 +1,6 @@
 //RICHARD 
 package dsw.detodoartebackend.entity;
+import dsw.detodoartebackend.dto.PersonaRequest;
 //richard
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -50,9 +51,16 @@ public class Personas {
     
     @Column(name = "contrasena", nullable = false, length = 100, unique = false)
     private String contrasena;
+
+    @Column(name = "rol", length = 20)
+    private String rol;
+
+    @Column(name = "estado")
+    private boolean estado;
+
     
     public Personas(String dni, String nombre_completo, String apellido_paterno,String apellido_materno,
-            String direccion, char sexo, String telefono, String correoElectronico, String contrasena){
+            String direccion, char sexo, String telefono, String correoElectronico, String contrasena, String rol) {
         this.dni = dni;
         this.nombreCompleto = nombre_completo;
         this.apellidoPaterno = apellido_paterno;
@@ -62,8 +70,48 @@ public class Personas {
         this.telefono = telefono;
         this.correoElectronico = correoElectronico;
         this.contrasena = contrasena;
+        this.rol = rol;
+        this.estado = false; // Por defecto, el estado es verdadero (activo)
     }
 
+    public void desacticarCliente() {
+     this.estado=false;
+}
+
+    public void actualizarDatos(PersonaRequest personaRequest) {
+
+        if(personaRequest.getDni() != null) {
+            this.dni = personaRequest.getDni();
+        }
+        if(personaRequest.getNombre_completo() != null) {
+            this.nombreCompleto = personaRequest.getNombre_completo();
+        }
+        if(personaRequest.getApellido_paterno() != null) {
+            this.apellidoPaterno = personaRequest.getApellido_paterno();
+        }
+        if(personaRequest.getApellido_materno() != null) {
+            this.apellidoMaterno = personaRequest.getApellido_materno();
+        }
+        if(personaRequest.getDireccion_residencia() != null) {
+            this.direccion = personaRequest.getDireccion_residencia();
+        }
+        if(personaRequest.getSexo() != '\0') {
+            this.sexo = personaRequest.getSexo();
+        }
+        if(personaRequest.getTelefono() != null) {
+            this.telefono = personaRequest.getTelefono();
+        }
+        if(personaRequest.getCorreo_electronico() != null) {
+            this.correoElectronico = personaRequest.getCorreo_electronico();
+        }
+        if(personaRequest.getContrasena() != null) {
+            this.contrasena = personaRequest.getContrasena();
+        }
+        if(personaRequest.getRol() != null) {
+            this.rol = personaRequest.getRol();
+        }
+        
+    }
 }
 
 

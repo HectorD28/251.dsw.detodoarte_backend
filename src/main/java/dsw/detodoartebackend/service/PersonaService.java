@@ -39,7 +39,8 @@ public class PersonaService {
             personaRequest.getSexo(),
             personaRequest.getTelefono(),
             personaRequest.getCorreo_electronico(),
-            personaRequest.getContrasena()
+            personaRequest.getContrasena(),
+            personaRequest.getRol()
         );
         if (personaRepository.existsByDni(persona.getDni())) {
             throw new RuntimeException("El DNI ya está registrado en el sistema.");

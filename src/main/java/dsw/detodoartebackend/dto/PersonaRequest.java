@@ -23,6 +23,8 @@ public class PersonaRequest {
     private char sexo;             // mapeado a direccion_residencia
     private String telefono;                  // mapeado a sexo
     private String correo_electronico;  
-    private String contrasena;// mapeado a telefono
+    private String contrasena;
+    private String rol; // mapeado a rol en la base de datos
+    private boolean estado; // mapeado a estado en la base de datos
     
 }

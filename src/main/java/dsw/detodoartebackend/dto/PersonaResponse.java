@@ -27,6 +27,8 @@ public class PersonaResponse {
     private String telefono;
     private String correoElectronico;
     private String contrasena;
+    private String rol; // mapeado a rol en la base de datos
+    private boolean estado; // mapeado a estado en la base de datos
     
     public static PersonaResponse fromEntity(Personas persona) {
         return PersonaResponse.builder()
@@ -40,6 +42,8 @@ public class PersonaResponse {
             .telefono(persona.getTelefono())
             .correoElectronico(persona.getCorreoElectronico()== null ? "" : persona.getDireccion())
             .contrasena(persona.getContrasena()== null ? "" : persona.getDireccion())
+            .rol(persona.getRol() == null ? "" : persona.getRol())
+            .estado(persona.isEstado())
             .build();
     }
 
@@ -48,4 +52,21 @@ public class PersonaResponse {
                 .map(PersonaResponse::fromEntity)
                 .collect(Collectors.toList());
     }
+
+    public PersonaResponse(Personas persona) {
+        this.persona_id = persona.getPersona_id();
+        this.dni = persona.getDni();
+        this.nombreCompleto = persona.getNombreCompleto();
+        this.apellidoPaterno = persona.getApellidoPaterno();
+        this.apellidoMaterno = persona.getApellidoMaterno();
+        this.direccion = persona.getDireccion();
+        this.sexo = persona.getSexo();
+        this.telefono = persona.getTelefono();
+        this.correoElectronico = persona.getCorreoElectronico();
+        this.contrasena = persona.getContrasena();
+        this.rol = persona.getRol();
+        this.estado = persona.isEstado();
+    }
+            
+    
 }
