@@ -13,8 +13,9 @@ public class AuthenticationService implements UserDetailsService {
     @Autowired
     private PersonaRepository personaRepository;
 
+
     @Override
-    public UserDetails loadUserByUsername(String correoElectronico) throws UsernameNotFoundException {
-        return personaRepository.findByCorreoElectronico(correoElectronico);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return personaRepository.findByUsername(username);
     }
 }

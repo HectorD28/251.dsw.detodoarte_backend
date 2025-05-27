@@ -14,7 +14,7 @@ import org.springframework.data.repository.query.Param;
 @Repository
 public interface PersonaRepository extends JpaRepository<Personas, Long> {
     @Query("SELECT p FROM Personas p WHERE p.correoElectronico = :username")
-    UserDetails findByCorreoElectronico(@Param("correo_electronico") String correoElectronico);
+    UserDetails findByUsername(@Param("username") String username);
     boolean existsByDni(String dni);
     boolean existsByCorreoElectronico(String correoElectronico);
     List<Personas> findByEstadoTrue();
