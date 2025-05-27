@@ -5,20 +5,22 @@
 package dsw.detodoartebackend.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
-@Entity
 @Data
+@Entity
 @Table(name = "tecnicas")
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Tecnica {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_tecnica")
-    private Long id;
+    private Long idTecnica;
 
-    @Column(name = "nombre_tecnica", nullable = false, unique = true)
-    private String codigo;
-
+    @Column(name = "nombre_tecnica")
+    private String nombreTecnica;
 }
+
 

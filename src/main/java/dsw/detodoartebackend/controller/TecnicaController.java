@@ -4,21 +4,43 @@
  */
 package dsw.detodoartebackend.controller;
 
-import dsw.detodoartebackend.entity.Tecnica;
+import dsw.detodoartebackend.dto.TecnicaRequest;
+import dsw.detodoartebackend.dto.TecnicaResponse;
 import dsw.detodoartebackend.service.TecnicaService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/tecnicas")
+@RequiredArgsConstructor
 public class TecnicaController {
 
-    @Autowired
-    private TecnicaService tecnicaService;
+    private final TecnicaService tecnicaService;
 
-    @GetMapping("/{id}")
-    public Tecnica obtenerTecnica(@PathVariable Long id) {
-        return tecnicaService.obtenerTecnicaPorId(id);
+    @GetMapping
+    public ResponseEntity<List<TecnicaResponse>> obtenerTodas() {
+        return ResponseEntity.ok(tecnicaService.obtenerTodasTecnicas());
+    }
+
+    @PostMapping
+    public ResponseEntity<TecnicaResponse> crear(@RequestBody TecnicaRequest request) {
+        return ResponseEntity.ok(tecnicaService.guardarTecnica(request));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<TecnicaResponse> actualizar(@PathVariable Long id, @RequestBody TecnicaRequest request) {
+        return ResponseEntity.ok(tecnicaService.actualizarTecnica(id, request));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+        tecnicaService.eliminarTecnica(id);
+        return ResponseEntity.noContent().build();
     }
 }
+
+
 

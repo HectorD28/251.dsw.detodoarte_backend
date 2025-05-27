@@ -4,19 +4,51 @@
  */
 package dsw.detodoartebackend.service;
 
+import dsw.detodoartebackend.dto.TecnicaRequest;
+import dsw.detodoartebackend.dto.TecnicaResponse;
 import dsw.detodoartebackend.entity.Tecnica;
 import dsw.detodoartebackend.repository.TecnicaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
+@RequiredArgsConstructor
 public class TecnicaService {
 
-    @Autowired
-    private TecnicaRepository tecnicaRepository;
+    private final TecnicaRepository tecnicaRepository;
 
-    public Tecnica obtenerTecnicaPorId(Long id) {
-        return tecnicaRepository.findById(id).orElseThrow(() -> new RuntimeException("Técnica no encontrada"));
+    public List<TecnicaResponse> obtenerTodasTecnicas() {
+        return tecnicaRepository.findAll()
+                .stream()
+                .map(TecnicaResponse::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    public TecnicaResponse guardarTecnica(TecnicaRequest request) {
+        Tecnica tecnica = Tecnica.builder()
+                .nombreTecnica(request.getNombre_tecnica())
+                .build();
+        tecnica = tecnicaRepository.save(tecnica);
+        return TecnicaResponse.fromEntity(tecnica);
+    }
+
+    public TecnicaResponse actualizarTecnica(Long id, TecnicaRequest request) {
+        Tecnica tecnica = tecnicaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Técnica no encontrada"));
+
+        tecnica.setNombreTecnica(request.getNombre_tecnica());
+        tecnica = tecnicaRepository.save(tecnica);
+
+        return TecnicaResponse.fromEntity(tecnica);
+    }
+
+    public void eliminarTecnica(Long id) {
+        tecnicaRepository.deleteById(id);
     }
 }
+
+
 
