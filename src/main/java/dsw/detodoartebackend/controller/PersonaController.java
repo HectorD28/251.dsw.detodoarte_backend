@@ -70,6 +70,7 @@ public class PersonaController {
         URI url =uriBuilder.path("/cliente/{id}").buildAndExpand(personaRequest.getDni()).toUri();
         
         try{
+            personaRequest.setEstado(false);
             personaResponse=personaService.guardarPersona(personaRequest);
             
 
