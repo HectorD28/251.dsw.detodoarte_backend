@@ -8,10 +8,15 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.util.Collection;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 @Data
 @Entity
@@ -19,7 +24,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="personas")
-public class Personas {
+public class Personas implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "persona_id")
@@ -57,10 +62,12 @@ public class Personas {
 
     @Column(name = "estado")
     private boolean estado;
-
+    
+    @Column(name = "username", length = 50, unique = true)
+    private String username;
     
     public Personas(String dni, String nombre_completo, String apellido_paterno,String apellido_materno,
-            String direccion, char sexo, String telefono, String correoElectronico, String contrasena, String rol) {
+            String direccion, char sexo, String telefono, String correoElectronico, String contrasena, String rol,boolean estado,String username) {
         this.dni = dni;
         this.nombreCompleto = nombre_completo;
         this.apellidoPaterno = apellido_paterno;
@@ -71,7 +78,8 @@ public class Personas {
         this.correoElectronico = correoElectronico;
         this.contrasena = contrasena;
         this.rol = rol;
-        this.estado = false; // Por defecto, el estado es verdadero (activo)
+        this.estado = true; // Por defecto, el estado es verdadero (activo)
+        this.username=username;
     }
 
     public void desacticarCliente() {
@@ -101,8 +109,8 @@ public class Personas {
         if(personaRequest.getTelefono() != null) {
             this.telefono = personaRequest.getTelefono();
         }
-        if(personaRequest.getCorreo_electronico() != null) {
-            this.correoElectronico = personaRequest.getCorreo_electronico();
+        if(personaRequest.getCorreoElectronico() != null) {
+            this.correoElectronico = personaRequest.getCorreoElectronico();
         }
         if(personaRequest.getContrasena() != null) {
             this.contrasena = personaRequest.getContrasena();
@@ -110,8 +118,50 @@ public class Personas {
         if(personaRequest.getRol() != null) {
             this.rol = personaRequest.getRol();
         }
+        this.estado = personaRequest.isEstado();
+        if(personaRequest.getUsername() != null) {
+            this.username = personaRequest.getUsername();
+        }
         
     }
+    
+     @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        // Aquí devuelve la lista de roles/authorities del usuario
+        // Por ejemplo, puedes crear un objeto SimpleGrantedAuthority con el rol
+        return List.of(new SimpleGrantedAuthority("ROLE_" + rol.toUpperCase()));
+    }
+
+    @Override
+    public String getPassword() {
+        return contrasena;
+    }
+
+    @Override
+    public String getUsername() {
+        return username; // usas el correo como username
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true; // o implementa según estado
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true; // o implementa según estado
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true; // o implementa según estado
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return estado; // si usas estado para habilitar/deshabilitar
+    }
+    
 }
 
 

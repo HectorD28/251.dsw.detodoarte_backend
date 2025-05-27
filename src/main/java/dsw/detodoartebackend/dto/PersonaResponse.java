@@ -29,6 +29,7 @@ public class PersonaResponse {
     private String contrasena;
     private String rol; // mapeado a rol en la base de datos
     private boolean estado; // mapeado a estado en la base de datos
+    private String username;
     
     public static PersonaResponse fromEntity(Personas persona) {
         return PersonaResponse.builder()
@@ -40,10 +41,11 @@ public class PersonaResponse {
             .direccion(persona.getDireccion() == null ? "" : persona.getDireccion())
             .sexo(persona.getSexo())
             .telefono(persona.getTelefono())
-            .correoElectronico(persona.getCorreoElectronico()== null ? "" : persona.getDireccion())
-            .contrasena(persona.getContrasena()== null ? "" : persona.getDireccion())
+            .correoElectronico(persona.getCorreoElectronico()== null ? "" : persona.getCorreoElectronico())
+            .contrasena(persona.getContrasena()== null ? "" : persona.getContrasena())
             .rol(persona.getRol() == null ? "" : persona.getRol())
             .estado(persona.isEstado())
+            .username(persona.getUsername()== null ? "" : persona.getUsername())
             .build();
     }
 
@@ -66,6 +68,7 @@ public class PersonaResponse {
         this.contrasena = persona.getContrasena();
         this.rol = persona.getRol();
         this.estado = persona.isEstado();
+        this.username = persona.getUsername();
     }
             
     

@@ -10,6 +10,7 @@ import dsw.detodoartebackend.entity.Personas;
 import dsw.detodoartebackend.repository.PersonaRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -28,6 +29,9 @@ public class PersonaService {
         return PersonaResponse.fromEntities(personaRepository.findAll());
     }
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+    
     public PersonaResponse guardarPersona(PersonaRequest personaRequest) {
     try {
         Personas persona = new Personas(
@@ -38,17 +42,23 @@ public class PersonaService {
             personaRequest.getDireccion_residencia(),
             personaRequest.getSexo(),
             personaRequest.getTelefono(),
-            personaRequest.getCorreo_electronico(),
+            personaRequest.getCorreoElectronico(),
             personaRequest.getContrasena(),
-            personaRequest.getRol()
+            personaRequest.getRol(),
+            false,
+            personaRequest.getUsername()
         );
+
+        
+        persona.setContrasena(passwordEncoder.encode(personaRequest.getContrasena()));
+
         if (personaRepository.existsByDni(persona.getDni())) {
             throw new RuntimeException("El DNI ya está registrado en el sistema.");
         }
         if (personaRepository.existsByCorreoElectronico(persona.getCorreoElectronico())) {
             throw new RuntimeException("El correo electrónico ya está registrado en el sistema.");
         }
-
+        
         persona= personaRepository.save(persona);
         
 

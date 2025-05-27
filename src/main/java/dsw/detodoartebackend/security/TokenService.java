@@ -25,7 +25,7 @@ public class TokenService {
             Algorithm algorithm = Algorithm.HMAC256(apiSecret);
             return JWT.create()
                     .withIssuer("DeTodoArte")
-                    .withSubject(personas.getCorreoElectronico())
+                    .withSubject(personas.getUsername())
                     .withClaim("id", personas.getPersona_id())
                     .withClaim("rol",personas.getRol())
                     .withExpiresAt(generarFechaExpiracion())
@@ -35,27 +35,23 @@ public class TokenService {
         }
     }
 
-    public String getSubject(String token) {
-        if (token == null) {
-            throw new RuntimeException();
+        public String getSubject(String token) {
+            if (token == null) {
+                throw new RuntimeException("Token nulo");
+            }
+            DecodedJWT verifier = null;
+            try {
+                Algorithm algorithm = Algorithm.HMAC256(apiSecret);
+                verifier = JWT.require(algorithm)
+                        .withIssuer("DeTodoArte")  // debe coincidir con generarToken
+                        .build()
+                        .verify(token);
+                return verifier.getSubject();
+            } catch (JWTVerificationException exception) {
+                System.out.println("Error de verificación JWT: " + exception.toString());
+                throw new RuntimeException("Token inválido");
+            }
         }
-        DecodedJWT verifier = null;
-        try {
-            Algorithm algorithm = Algorithm.HMAC256(apiSecret); // validando firma
-            verifier = JWT.require(algorithm)
-                    .withIssuer("veterinaria")
-
-                    .build()
-                    .verify(token);
-            verifier.getSubject();
-        } catch (JWTVerificationException exception) {
-            System.out.println(exception.toString());
-        }
-        if (verifier.getSubject() == null) {
-            throw new RuntimeException("Verifier invalido");
-        }
-        return verifier.getSubject();
-    }
 
     private Instant generarFechaExpiracion() {
         return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-05:00"));
