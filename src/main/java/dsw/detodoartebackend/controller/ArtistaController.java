@@ -41,7 +41,7 @@ public class ArtistaController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorResponse.builder().message("Persona not found").build());
         return ResponseEntity.ok(listaArtistaResponse); 
     }
-    @PostMapping()
+    @PostMapping("/crear")
     public ResponseEntity<?> registrarArtista(@RequestBody ArtistaRequest artistaRequest) {
         logger.info(">insert " + artistaRequest.toString());
         ArtistaResponse artistaResponse;

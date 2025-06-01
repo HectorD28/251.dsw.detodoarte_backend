@@ -32,9 +32,9 @@ public class Especialista {
     private Tecnica tecnica; 
     
     public Especialista(Personas persona, Tecnica tecnica) {
-    this.persona = persona;
-    this.tecnica = tecnica;
-}
+        this.persona = persona;
+        this.tecnica = tecnica;
+    }
     
 }
 
