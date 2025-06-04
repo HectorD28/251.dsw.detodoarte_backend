@@ -14,7 +14,7 @@ public class SolicitudExposicion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_solicitud")
+    @Column(name = "id_solicitud_exposicion")
     private Long idSolicitud;
 
     @Column(name = "fecha_emision_solicitud")

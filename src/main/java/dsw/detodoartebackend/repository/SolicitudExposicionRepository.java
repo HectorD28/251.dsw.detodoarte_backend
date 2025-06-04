@@ -9,5 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface SolicitudExposicionRepository extends JpaRepository<SolicitudExposicion, Long>{
     
     List<SolicitudExposicion> findByArtista_IdArtista(Long id_artista);
-     
+    List<SolicitudExposicion> findByEstadoSolicitud(String estadoSolicitud);
+
 }

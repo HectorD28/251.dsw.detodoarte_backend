@@ -15,12 +15,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ExposicionRequest {
-
-    private Long id_exposicion;
     private String nombre;
     private String descripcion;
     private LocalDate fecha_inicio;
     private LocalDate fecha_fin; 
     private String tipo_exposicion;
+    private Long idSolicitudExposicion;
     
 }
