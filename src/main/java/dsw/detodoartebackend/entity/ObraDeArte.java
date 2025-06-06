@@ -49,6 +49,32 @@ public class ObraDeArte {
     @Column(name = "ruta_imagen")  // opcional, para especificar el nombre de columna
     private String rutaImagen;
 
+    @Column(name = "stock")
+    private Integer stock;
+    
+    
+    
+    public synchronized boolean reducirStock(int cantidad) {
+        if (stock >= cantidad) {
+            this.stock -= cantidad;
+            return true;
+        }
+        return false;
+    }
+
+    public synchronized void restaurarStock(int cantidad) {
+        this.stock += cantidad;
+    }
+
+    public synchronized void confirmarCompra(int cantidad) {
+        if (this.stock >= cantidad) {
+            this.stock -= cantidad;
+        }
+    }
+
+    public synchronized void liberarStock(int cantidad) {
+        this.restaurarStock(cantidad);
+    }
 }
 
 

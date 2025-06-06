@@ -22,6 +22,7 @@ public class ObraDeArteRequest {
     private Long id_artista;
     private Double precio;
     private String ruta_imagen;
+    
 }
 
 

@@ -17,5 +17,8 @@ public interface ObraDeArteRepository extends JpaRepository<ObraDeArte, Long> {
      boolean existsByTitulo(String titulo);
      // List<ObraDeArte> findByArtistaId(Long artistaId);
      List<ObraDeArte> findByArtista_IdArtista(Long id_artista);
+     
+    List<ObraDeArte> findByTituloContainingIgnoreCase(String titulo);
+
 }
 

@@ -64,6 +64,7 @@ public class ObraDeArteService {
                 .artista(artista)
                 .precio(request.getPrecio())
                 .cantidadVisualizaciones(0) // Inicializamos en cero
+                .stock(1)
                 .build();
 
         ObraDeArte saved = obraRepository.save(obra);
@@ -149,4 +150,19 @@ public class ObraDeArteService {
 
         return ObraDeArteResponse.fromEntity(obra);
     }
+    
+    
+    public ObraDeArte obtenerPorId(long ObraId) {
+        return obraRepository.findById(ObraId)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado : c"));
+    }
+    
+    public ObraDeArte guardarProducto(ObraDeArte producto) {
+        return obraRepository.save(producto);
+    }
+    
+    public List<ObraDeArte> buscarPorNombre(String nombre) {
+        return obraRepository.findByTituloContainingIgnoreCase(nombre);
+    }
+    
 }

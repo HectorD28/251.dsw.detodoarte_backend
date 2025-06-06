@@ -25,7 +25,8 @@ public class ObraDeArteResponse {
     private Double precio;
     private Integer cantidadVisualizacines;
     private String rutaImagen;
-
+    private Integer stock;
+    
     public static ObraDeArteResponse fromEntity(ObraDeArte obradearte) {
         return ObraDeArteResponse.builder()
             .ObraId(obradearte.getObraId())
@@ -37,6 +38,7 @@ public class ObraDeArteResponse {
             .precio(obradearte.getPrecio())
             .cantidadVisualizacines(obradearte.getCantidadVisualizaciones())
             .rutaImagen(obradearte.getRutaImagen())
+            .stock(obradearte.getStock())
             .build();
     }
 

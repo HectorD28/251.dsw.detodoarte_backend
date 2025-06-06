@@ -23,6 +23,7 @@ public class TokenService {
     public String generarToken(Personas personas) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(apiSecret);
+            System.out.println(personas.getRol()+"parte1..7");
             return JWT.create()
                     .withIssuer("DeTodoArte")
                     .withSubject(personas.getUsername())
@@ -30,6 +31,7 @@ public class TokenService {
                     .withClaim("rol",personas.getRol())
                     .withExpiresAt(generarFechaExpiracion())
                     .sign(algorithm);
+            
         } catch (JWTCreationException exception){
             throw new RuntimeException();
         }
