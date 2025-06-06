@@ -34,9 +34,9 @@ public class EvaluacionArtistica {
     private Long idEvaluacionArtistica;
     
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_solicitud", referencedColumnName = "id_solicitud", nullable = false)
+    @JoinColumn(name = "id_solicitud_exposicion", referencedColumnName = "id_solicitud_exposicion", nullable = false)
     private SolicitudExposicion solicitudExposicion;
-    
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_obra", referencedColumnName = "id_obra", nullable = false)
     private ObraDeArte obradearte;
