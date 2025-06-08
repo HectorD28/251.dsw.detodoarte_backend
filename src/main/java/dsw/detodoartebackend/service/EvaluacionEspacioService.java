@@ -31,7 +31,7 @@ public class EvaluacionEspacioService {
     private AdministradorRepository administradorRepository;
 
     public List<EvaluacionEspacioResponse> getEvaluacionesPorObra(Long idObra) {
-        List<EvaluacionEspacio> evaluaciones = evaluacionEspacioRepository.findByObra_IdObra(idObra);
+        List<EvaluacionEspacio> evaluaciones = evaluacionEspacioRepository.findByObra_ObraId(idObra);
         return EvaluacionEspacioResponse.fromEntities(evaluaciones);
     }
 

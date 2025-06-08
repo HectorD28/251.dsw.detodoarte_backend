@@ -26,7 +26,7 @@ public class EvaluacionEconomicaService {
     private EspecialistaRepository especialistaRepository;
 
     public List<EvaluacionEconomicaResponse> getEvaluacionesPorObra(Long idObra) {
-        List<EvaluacionEconomica> evaluaciones = evaluacionEconomicaRepository.findByObra_IdObra(idObra);
+        List<EvaluacionEconomica> evaluaciones = evaluacionEconomicaRepository.findByObra_ObraId(idObra);
         return EvaluacionEconomicaResponse.fromEntities(evaluaciones);
     }
 

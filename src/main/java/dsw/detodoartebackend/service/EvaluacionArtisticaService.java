@@ -26,7 +26,7 @@ public class EvaluacionArtisticaService {
     private EspecialistaRepository especialistaRepository;
 
     public List<EvaluacionArtisticaResponse> getEvaluacionesPorObra(Long idObra) {
-        List<EvaluacionArtistica> evaluaciones = evaluacionArtisticaRepository.findByObra_IdObra(idObra);
+        List<EvaluacionArtistica> evaluaciones = evaluacionArtisticaRepository.findByObra_ObraId(idObra);
         return EvaluacionArtisticaResponse.fromEntities(evaluaciones);
     }
 

@@ -10,6 +10,6 @@ import java.util.List;
 public interface EvaluacionEspacioRepository extends JpaRepository<EvaluacionEspacio, Long> {
 
     // Agregar este método para buscar evaluaciones de espacio por ID de la obra
-    List<EvaluacionEspacio> findByObra_IdObra(Long idObra);
+    List<EvaluacionEspacio> findByObra_ObraId(Long obraId);
 
 }

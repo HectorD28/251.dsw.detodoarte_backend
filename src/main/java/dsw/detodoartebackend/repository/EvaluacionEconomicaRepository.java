@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface EvaluacionEconomicaRepository extends JpaRepository<EvaluacionEconomica, Long> {
-    List<EvaluacionEconomica> findByObra_IdObra(Long idObra);
+    List<EvaluacionEconomica> findByObra_ObraId(Long obraId);
 }
