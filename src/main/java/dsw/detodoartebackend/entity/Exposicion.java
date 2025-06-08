@@ -9,6 +9,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+<<<<<<< HEAD
+=======
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+>>>>>>> 54190686d3925c64f2b8a30e6257b3af79f631ca
 import jakarta.persistence.Table;
 import java.time.LocalDate;
 import lombok.AllArgsConstructor;
@@ -21,7 +27,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="exposicion")
+@Table(name="exposiciones")
 public class Exposicion {
     
     @Id
@@ -43,5 +49,10 @@ public class Exposicion {
 
     @Column(name = "tipo_exposicion")
     private String tipo_exposicion;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_solicitud_exposicion")
+    private SolicitudExposicion solicitudExposicion;
     
+
 }

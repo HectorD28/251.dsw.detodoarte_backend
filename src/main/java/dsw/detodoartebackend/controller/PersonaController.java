@@ -112,7 +112,7 @@ public class PersonaController {
        var personaResponse = new PersonaResponse(personas);
     return ResponseEntity.ok(personaResponse);
     }
-
+    
     @GetMapping ("/{id}")
     public ResponseEntity<PersonaResponse> retornarDatosCliente(@PathVariable Long id){
 

@@ -1,11 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dsw.detodoartebackend.dto;
 
 import dsw.detodoartebackend.entity.Exposicion;
-import dsw.detodoartebackend.entity.ObraDeArte;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,17 +14,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ExposicionResponse {
-    
     private Long id_exposicion;
     private String nombre;
     private String descripcion;
     private LocalDate fecha_inicio;
     private LocalDate fecha_fin; 
     private String tipo_exposicion;
-    
+
     public static ExposicionResponse fromEntity(Exposicion exposicion) {
-        return ExposicionResponse.builder()     
-            //.id_exposicion(exposicion.getId_exposicion())
+        return ExposicionResponse.builder()
+            .id_exposicion(exposicion.getId_exposicion())
             .nombre(exposicion.getNombre())
             .descripcion(exposicion.getDescripcion())
             .fecha_inicio(exposicion.getFecha_inicio())
@@ -43,6 +37,4 @@ public class ExposicionResponse {
                 .map(ExposicionResponse::fromEntity)
                 .collect(Collectors.toList());
     }
-    
 }
-

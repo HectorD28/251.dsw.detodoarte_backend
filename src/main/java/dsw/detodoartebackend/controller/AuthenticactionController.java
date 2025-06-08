@@ -40,6 +40,7 @@ public class AuthenticactionController {
                 datos.contrasena()
             );
             System.out.println(datos.username()+"parte1..7");
+            System.out.println(datos.contrasena()+"parte1..7");
             var usuarioAutenticado = authenticationManager.authenticate(authToken);
             System.out.println("Contraseña ingresada: " + datos.contrasena());
             System.out.println("Contraseña en BD: " + usuarioAutenticado.getPrincipal());

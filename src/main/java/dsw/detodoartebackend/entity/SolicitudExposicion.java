@@ -15,7 +15,11 @@ public class SolicitudExposicion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_solicitud_exposicion")
+<<<<<<< HEAD
     private Long idSolicitudExposicion;
+=======
+    private Long idSolicitud;
+>>>>>>> 54190686d3925c64f2b8a30e6257b3af79f631ca
 
     @Column(name = "fecha_emision_solicitud")
     private LocalDate fechaEmisionSolicitud;
