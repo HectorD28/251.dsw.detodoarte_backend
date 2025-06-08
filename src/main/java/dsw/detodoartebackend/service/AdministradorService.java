@@ -3,7 +3,7 @@ package dsw.detodoartebackend.service;
 import dsw.detodoartebackend.dto.AdministradorRequest;
 import dsw.detodoartebackend.dto.AdministradorResponse;
 import dsw.detodoartebackend.entity.Administrador;
-import dsw.detodoartebackend.entity.Persona;
+import dsw.detodoartebackend.entity.Personas;
 import dsw.detodoartebackend.repository.AdministradorRepository;
 import dsw.detodoartebackend.repository.PersonaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class AdministradorService {
     }
 
     public AdministradorResponse createAdministrador(AdministradorRequest request) {
-        Persona persona = personaRepository.findById(request.getPersonaId())
+        Personas persona = personaRepository.findById(request.getPersonaId())
                 .orElseThrow(() -> new RuntimeException("Persona no encontrada"));
 
         Administrador administrador = Administrador.builder()
@@ -49,7 +49,7 @@ public class AdministradorService {
         Administrador existingAdministrador = administradorRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Administrador no encontrado con ID " + id));
 
-        Persona persona = personaRepository.findById(request.getPersonaId())
+        Personas persona = personaRepository.findById(request.getPersonaId())
                 .orElseThrow(() -> new RuntimeException("Persona no encontrada"));
 
         existingAdministrador.setPersona(persona);

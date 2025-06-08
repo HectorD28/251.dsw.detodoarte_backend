@@ -24,7 +24,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="personas")
-public class Persona implements UserDetails{
+public class Personas implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "persona_id")
@@ -66,7 +66,7 @@ public class Persona implements UserDetails{
     @Column(name = "username", length = 50, unique = true)
     private String username;
     
-    public Persona(String dni, String nombre_completo, String apellido_paterno,String apellido_materno,
+    public Personas(String dni, String nombre_completo, String apellido_paterno,String apellido_materno,
             String direccion, char sexo, String telefono, String correoElectronico, String contrasena, String rol,boolean estado,String username) {
         this.dni = dni;
         this.nombreCompleto = nombre_completo;

@@ -4,7 +4,7 @@
  */
 package dsw.detodoartebackend.dto;
 
-import dsw.detodoartebackend.entity.Persona;
+import dsw.detodoartebackend.entity.Personas;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
@@ -31,7 +31,7 @@ public class PersonaResponse {
     private boolean estado; // mapeado a estado en la base de datos
     private String username;
     
-    public static PersonaResponse fromEntity(Persona persona) {
+    public static PersonaResponse fromEntity(Personas persona) {
         return PersonaResponse.builder()
             .persona_id(persona.getPersonaId())
             .dni(persona.getDni())
@@ -49,13 +49,13 @@ public class PersonaResponse {
             .build();
     }
 
-    public static List<PersonaResponse> fromEntities(List<Persona> personas) {
+    public static List<PersonaResponse> fromEntities(List<Personas> personas) {
         return personas.stream()
                 .map(PersonaResponse::fromEntity)
                 .collect(Collectors.toList());
     }
 
-    public PersonaResponse(Persona persona) {
+    public PersonaResponse(Personas persona) {
         this.persona_id = persona.getPersonaId();
         this.dni = persona.getDni();
         this.nombreCompleto = persona.getNombreCompleto();

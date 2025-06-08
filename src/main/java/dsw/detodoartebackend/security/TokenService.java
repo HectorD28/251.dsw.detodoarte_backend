@@ -6,7 +6,7 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
-import dsw.detodoartebackend.entity.Persona;
+import dsw.detodoartebackend.entity.Personas;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class TokenService {
     @Value("${api.security.secret}")
     private String apiSecret;
 
-    public String generarToken(Persona personas) {
+    public String generarToken(Personas personas) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(apiSecret);
             System.out.println(personas.getRol()+"parte1..7");

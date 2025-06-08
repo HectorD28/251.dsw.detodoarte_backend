@@ -1,7 +1,7 @@
 package dsw.detodoartebackend.dto;
 
 import dsw.detodoartebackend.entity.Artista;
-import dsw.detodoartebackend.entity.Persona;
+import dsw.detodoartebackend.entity.Personas;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ArtistaResponse {
     private Long idArtista;
-    private Persona persona; // Incluir el objeto completo de Persona
+    private Personas persona; // Incluir el objeto completo de Persona
 
     public static ArtistaResponse fromEntity(Artista artista) {
         return ArtistaResponse.builder()

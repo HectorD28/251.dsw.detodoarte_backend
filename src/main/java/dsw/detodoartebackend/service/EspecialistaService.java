@@ -3,7 +3,7 @@ package dsw.detodoartebackend.service;
 import dsw.detodoartebackend.dto.EspecialistaRequest;
 import dsw.detodoartebackend.dto.EspecialistaResponse;
 import dsw.detodoartebackend.entity.Especialista;
-import dsw.detodoartebackend.entity.Persona;
+import dsw.detodoartebackend.entity.Personas;
 import dsw.detodoartebackend.entity.Tecnica;
 import dsw.detodoartebackend.repository.EspecialistaRepository;
 import dsw.detodoartebackend.repository.PersonaRepository;
@@ -38,7 +38,7 @@ public class EspecialistaService {
     }
 
     public EspecialistaResponse createEspecialista(EspecialistaRequest especialistaRequest) {
-        Persona persona = personaRepository.findById(especialistaRequest.getPersonaId())
+        Personas persona = personaRepository.findById(especialistaRequest.getPersonaId())
                 .orElseThrow(() -> new RuntimeException("Persona no encontrada con ID " + especialistaRequest.getPersonaId()));
 
         Tecnica tecnica = tecnicaRepository.findById(especialistaRequest.getTecnicaId())
@@ -57,7 +57,7 @@ public class EspecialistaService {
         Especialista existingEspecialista = especialistaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Especialista no encontrado con ID " + id));
 
-        Persona persona = personaRepository.findById(especialistaRequest.getPersonaId())
+        Personas persona = personaRepository.findById(especialistaRequest.getPersonaId())
                 .orElseThrow(() -> new RuntimeException("Persona no encontrada con ID " + especialistaRequest.getPersonaId()));
 
         Tecnica tecnica = tecnicaRepository.findById(especialistaRequest.getTecnicaId())

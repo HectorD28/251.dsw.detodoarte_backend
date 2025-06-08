@@ -41,5 +41,5 @@ public class Auditoria {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id", referencedColumnName = "persona_id")
-    private Persona persona;  // Persona que realizó la modificación
+    private Personas persona;  // Persona que realizó la modificación
 }

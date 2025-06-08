@@ -22,7 +22,7 @@ public class Administrador {
     // Relación Muchos a Uno con Persona
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "persona_id", referencedColumnName = "persona_id", nullable = false)
-    private Persona persona;  // Relación con la tabla 'personas'
+    private Personas persona;  // Relación con la tabla 'personas'
 
     @Column(name = "password")
     private String password;

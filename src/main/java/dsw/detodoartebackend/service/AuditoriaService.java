@@ -3,7 +3,7 @@ package dsw.detodoartebackend.service;
 import dsw.detodoartebackend.dto.AuditoriaRequest;
 import dsw.detodoartebackend.dto.AuditoriaResponse;
 import dsw.detodoartebackend.entity.Auditoria;
-import dsw.detodoartebackend.entity.Persona;
+import dsw.detodoartebackend.entity.Personas;
 import dsw.detodoartebackend.repository.AuditoriaRepository;
 import dsw.detodoartebackend.repository.PersonaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class AuditoriaService {
 
     // Registrar un cambio en la auditoría
     public void registrarAuditoria(AuditoriaRequest request) {
-               Persona persona = personaRepository.findById(request.getPersonaId())
+               Personas persona = personaRepository.findById(request.getPersonaId())
                 .orElseThrow(() -> new RuntimeException("Persona no encontrado"));
         Auditoria auditoria = Auditoria.builder()
                 .tablaModificada(request.getTablaModificada())

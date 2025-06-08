@@ -93,7 +93,7 @@ public class CarritoReciboController {
             throw new RuntimeException("Carrito vacio");
         }
 
-        Recibo nuevoRecibo = reciboService.crearRecibo(ordenes, cliente != null ? cliente.getPersona_id() : null);
+        Recibo nuevoRecibo = reciboService.crearRecibo(ordenes, cliente != null ? cliente.getPersonaId() : null);
 
         for (OrdenDePago orden : ordenes) {
             orden.setEstado(PAGADO);

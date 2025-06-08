@@ -86,4 +86,35 @@ public class ObraDeArteService {
                 .orElseThrow(() -> new RuntimeException("Obra no encontrada con ID " + id));
         obraDeArteRepository.delete(obra);
     }
+    
+    
+    
+    
+        @Autowired
+    private ObraDeArteRepository productoRepository;
+
+   
+
+    public List<ObraDeArte> listarTodos(){
+        return productoRepository.findAll();
+    }
+
+
+
+    public ObraDeArte obtenerPorId(long ObraId) {
+        return productoRepository.findById(ObraId)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado : c"));
+    }
+    
+    public ObraDeArte guardarProducto(ObraDeArte producto) {
+        return productoRepository.save(producto);
+    }
+    
+    public List<ObraDeArte> buscarPorNombre(String nombre) {
+        return productoRepository.findByTituloContainingIgnoreCase(nombre);
+    }
+
+    
+    
+    
 }

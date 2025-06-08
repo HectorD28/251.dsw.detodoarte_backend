@@ -30,7 +30,7 @@ public class ValidarPagosService {
         }
 
         return clienteRepository.findByDni(documento)
-                .map(Personas::getPersona_id)
+                .map(Personas::getPersonaId)
                 .orElse(0L);
     }
 }

@@ -3,7 +3,7 @@ package dsw.detodoartebackend.service;
 import dsw.detodoartebackend.dto.ArtistaRequest;
 import dsw.detodoartebackend.dto.ArtistaResponse;
 import dsw.detodoartebackend.entity.Artista;
-import dsw.detodoartebackend.entity.Persona;
+import dsw.detodoartebackend.entity.Personas;
 import dsw.detodoartebackend.repository.ArtistaRepository;
 import dsw.detodoartebackend.repository.PersonaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ public class ArtistaService {
     }
 
     public ArtistaResponse createArtista(ArtistaRequest artistaRequest) {
-        Persona persona = personaRepository.findById(artistaRequest.getPersonaId())
+        Personas persona = personaRepository.findById(artistaRequest.getPersonaId())
                 .orElseThrow(() -> new RuntimeException("Persona no encontrada con ID " + artistaRequest.getPersonaId()));
 
         Artista artista = Artista.builder()
@@ -48,7 +48,7 @@ public class ArtistaService {
         Artista existingArtista = artistaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Artista no encontrado con ID " + id));
 
-        Persona persona = personaRepository.findById(artistaRequest.getPersonaId())
+        Personas persona = personaRepository.findById(artistaRequest.getPersonaId())
                 .orElseThrow(() -> new RuntimeException("Persona no encontrada con ID " + artistaRequest.getPersonaId()));
 
         existingArtista.setPersona(persona);

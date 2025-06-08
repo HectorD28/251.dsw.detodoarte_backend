@@ -6,7 +6,7 @@ package dsw.detodoartebackend.controller;
 
 import dsw.detodoartebackend.dto.PersonaRequest;
 import dsw.detodoartebackend.dto.PersonaResponse;
-import dsw.detodoartebackend.entity.Persona;
+import dsw.detodoartebackend.entity.Personas;
 import dsw.detodoartebackend.service.PersonaService;
 import dsw.detodoartebackend.repository.PersonaRepository;
 import dsw.detodoartebackend.utils.ErrorResponse;
@@ -98,7 +98,7 @@ public class PersonaController {
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<PersonaResponse> eliminarCliente (@PathVariable Long id){
-    Persona persona = personasRepository.getReferenceById(id);
+    Personas persona = personasRepository.getReferenceById(id);
     persona.desacticarCliente();
         return ResponseEntity.noContent().build();
     }
@@ -116,7 +116,7 @@ public class PersonaController {
     @GetMapping ("/{id}")
     public ResponseEntity<PersonaResponse> retornarDatosCliente(@PathVariable Long id){
 
-        Persona personas =    personasRepository.getReferenceById(id);
+        Personas personas =    personasRepository.getReferenceById(id);
         var personaResponse = new PersonaResponse(personas);
         return ResponseEntity.ok(personaResponse);
     }

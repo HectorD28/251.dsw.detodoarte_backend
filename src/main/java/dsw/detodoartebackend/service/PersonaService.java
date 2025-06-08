@@ -6,7 +6,7 @@ package dsw.detodoartebackend.service;
 
 import dsw.detodoartebackend.dto.PersonaRequest;
 import dsw.detodoartebackend.dto.PersonaResponse;
-import dsw.detodoartebackend.entity.Persona;
+import dsw.detodoartebackend.entity.Personas;
 import dsw.detodoartebackend.repository.PersonaRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ public class PersonaService {
     
     public PersonaResponse guardarPersona(PersonaRequest personaRequest) {
     try {
-        Persona persona = new Persona(
+        Personas persona = new Personas(
             personaRequest.getDni(),
             personaRequest.getNombre_completo(),
             personaRequest.getApellido_paterno(),
