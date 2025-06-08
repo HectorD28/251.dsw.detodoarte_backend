@@ -6,15 +6,11 @@ package dsw.detodoartebackend.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -42,7 +38,7 @@ public class Exposicion {
     @Column(name = "fecha_inicio")
     private LocalDate fecha_inicio;
 
-    @JoinColumn(name = "fecha_fin")
+    @Column(name = "fecha_fin")
     private LocalDate fecha_fin; 
 
     @Column(name = "tipo_exposicion")

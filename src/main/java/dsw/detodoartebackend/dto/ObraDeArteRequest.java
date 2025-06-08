@@ -1,14 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dsw.detodoartebackend.dto;
 
-import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
 
 @Data
 @Builder
@@ -21,7 +18,4 @@ public class ObraDeArteRequest {
     private Long id_tecnica;
     private Long id_artista;
     private Double precio;
-    private String ruta_imagen;
 }
-
-

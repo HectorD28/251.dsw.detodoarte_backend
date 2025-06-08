@@ -1,72 +1,64 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dsw.detodoartebackend.service;
 
 import dsw.detodoartebackend.dto.ArtistaRequest;
 import dsw.detodoartebackend.dto.ArtistaResponse;
-import dsw.detodoartebackend.dto.PersonaRequest;
-import dsw.detodoartebackend.dto.PersonaResponse;
 import dsw.detodoartebackend.entity.Artista;
-import dsw.detodoartebackend.entity.Personas;
+import dsw.detodoartebackend.entity.Persona;
 import dsw.detodoartebackend.repository.ArtistaRepository;
 import dsw.detodoartebackend.repository.PersonaRepository;
-import jakarta.transaction.Transactional;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ArtistaService {
 
     @Autowired
     private ArtistaRepository artistaRepository;
-    
+
     @Autowired
     private PersonaRepository personaRepository;
-    
-    public class ArtistaNotFoundException extends RuntimeException {
-        public ArtistaNotFoundException(String message) {
-            super(message);
-        }
+
+    public List<ArtistaResponse> getAllArtistas() {
+        List<Artista> artistas = artistaRepository.findAll();
+        return ArtistaResponse.fromEntities(artistas);
     }
 
-    public List<ArtistaResponse> obtenerTodasArtistas() {
-        return ArtistaResponse.fromEntities(artistaRepository.findAll());
+    public ArtistaResponse getArtistaById(Long id) {
+        Artista artista = artistaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Artista no encontrado con ID " + id));
+        return ArtistaResponse.fromEntity(artista);
     }
 
+    public ArtistaResponse createArtista(ArtistaRequest artistaRequest) {
+        Persona persona = personaRepository.findById(artistaRequest.getPersonaId())
+                .orElseThrow(() -> new RuntimeException("Persona no encontrada con ID " + artistaRequest.getPersonaId()));
 
-    public ArtistaResponse guardarArtista(ArtistaRequest artistaRequest) {
-        
+        Artista artista = Artista.builder()
+                .persona(persona)
+                .build();
 
-        try {
-            System.out.println("\nPRIMER PASO");
-            long persona_id = artistaRequest.getPersona_id();
-            //System.out.println("\n"+persona_id);
+        Artista savedArtista = artistaRepository.save(artista);
+        return ArtistaResponse.fromEntity(savedArtista);
+    }
 
-            Personas persona= personaRepository.findById(persona_id).get();
-            if(persona==null){
-                System.out.println("\nPersona con ID " + persona_id + " NO ENCONTRADO");
-                return new ArtistaResponse();
-            }
+    public ArtistaResponse updateArtista(Long id, ArtistaRequest artistaRequest) {
+        Artista existingArtista = artistaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Artista no encontrado con ID " + id));
 
-            Artista artista= new Artista(
-                persona
-            );
-            System.out.println("\nPersona con ID " + artista.getIdArtista() + " NO REGISTRADO EN SISTEMA");
-            //if (artistaRepository.existsById(artista.getId_artista())) {
-              //  throw new RuntimeException("El artista ya está registrado en el sistema.");
-            //}
-            System.out.println("\nPersona con ID " + persona_id + " NO REGISTRADO EN SISTEMA");
-            artista=artistaRepository.save(artista);
-            System.out.println("\nPersona con ID " + persona_id + " GUARDADO");
+        Persona persona = personaRepository.findById(artistaRequest.getPersonaId())
+                .orElseThrow(() -> new RuntimeException("Persona no encontrada con ID " + artistaRequest.getPersonaId()));
 
-            return ArtistaResponse.fromEntity(artista);
+        existingArtista.setPersona(persona);
+        Artista updatedArtista = artistaRepository.save(existingArtista);
+        return ArtistaResponse.fromEntity(updatedArtista);
+    }
 
-        } catch (Exception e) {
-            throw new RuntimeException("Error al guardar el artista", e);  // Manejo de errores
-        }
+    public void deleteArtista(Long id) {
+        Artista artista = artistaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Artista no encontrado con ID " + id));
+        artistaRepository.delete(artista);
     }
 }
-

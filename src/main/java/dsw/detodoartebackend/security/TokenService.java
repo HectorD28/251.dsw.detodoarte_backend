@@ -6,7 +6,7 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
-import dsw.detodoartebackend.entity.Personas;
+import dsw.detodoartebackend.entity.Persona;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -20,13 +20,13 @@ public class TokenService {
     @Value("${api.security.secret}")
     private String apiSecret;
 
-    public String generarToken(Personas personas) {
+    public String generarToken(Persona personas) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(apiSecret);
             return JWT.create()
                     .withIssuer("DeTodoArte")
                     .withSubject(personas.getUsername())
-                    .withClaim("id", personas.getPersona_id())
+                    .withClaim("id", personas.getPersonaId())
                     .withClaim("rol",personas.getRol())
                     .withExpiresAt(generarFechaExpiracion())
                     .sign(algorithm);

@@ -1,77 +1,78 @@
-
 package dsw.detodoartebackend.service;
 
 import dsw.detodoartebackend.dto.EspecialistaRequest;
 import dsw.detodoartebackend.dto.EspecialistaResponse;
 import dsw.detodoartebackend.entity.Especialista;
-import dsw.detodoartebackend.entity.Personas;
+import dsw.detodoartebackend.entity.Persona;
 import dsw.detodoartebackend.entity.Tecnica;
 import dsw.detodoartebackend.repository.EspecialistaRepository;
 import dsw.detodoartebackend.repository.PersonaRepository;
 import dsw.detodoartebackend.repository.TecnicaRepository;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class EspecialistaService {
+
     @Autowired
     private EspecialistaRepository especialistaRepository;
-    
+
     @Autowired
     private PersonaRepository personaRepository;
-    
+
     @Autowired
     private TecnicaRepository tecnicaRepository;
-    
-    public class EspecialistaNotFoundException extends RuntimeException {
-        public EspecialistaNotFoundException(String message) {
-            super(message);
-        }
+
+    public List<EspecialistaResponse> getAllEspecialistas() {
+        List<Especialista> especialistas = especialistaRepository.findAll();
+        return EspecialistaResponse.fromEntities(especialistas);
     }
 
-    public List<EspecialistaResponse> obtenerTodasEspecialistas() {
-        return EspecialistaResponse.fromEntities(especialistaRepository.findAll());
+    public EspecialistaResponse getEspecialistaById(Long id) {
+        Especialista especialista = especialistaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Especialista no encontrado con ID " + id));
+        return EspecialistaResponse.fromEntity(especialista);
     }
 
+    public EspecialistaResponse createEspecialista(EspecialistaRequest especialistaRequest) {
+        Persona persona = personaRepository.findById(especialistaRequest.getPersonaId())
+                .orElseThrow(() -> new RuntimeException("Persona no encontrada con ID " + especialistaRequest.getPersonaId()));
 
-    public EspecialistaResponse guardarEspecialista(EspecialistaRequest especialistaRequest) {
-        
+        Tecnica tecnica = tecnicaRepository.findById(especialistaRequest.getTecnicaId())
+                .orElseThrow(() -> new RuntimeException("Técnica no encontrada con ID " + especialistaRequest.getTecnicaId()));
 
-        try {
-            System.out.println("\nPRIMER PASO");
-            
-            long persona_id = especialistaRequest.getPersona_id();
-            Personas persona= personaRepository.findById(persona_id).get();
-            if(persona==null){
-                System.out.println("\nPersona con ID " + persona_id + " NO ENCONTRADO");
-                return new EspecialistaResponse();
-            }
-            
-            long id_tecnica = especialistaRequest.getId_tecnica();
-            Tecnica tecnica= tecnicaRepository.findById(id_tecnica).get();
-            if(tecnica==null){
-                System.out.println("\nTecnica con ID " + id_tecnica + " NO ENCONTRADO");
-                return new EspecialistaResponse();
-            }
-            
-            
+        Especialista especialista = Especialista.builder()
+                .persona(persona)
+                .tecnica(tecnica)
+                .build();
 
-            Especialista especialista= new Especialista(
-                persona,
-                tecnica
-            );
+        Especialista savedEspecialista = especialistaRepository.save(especialista);
+        return EspecialistaResponse.fromEntity(savedEspecialista);
+    }
 
-            if (especialistaRepository.existsById(persona.getPersona_id())) {
-                throw new RuntimeException("El especialista ya está registrado en el sistema a nombre de "+persona.getNombreCompleto());
-            }
-            especialista=especialistaRepository.save(especialista);
-            //System.out.println("\nPersona con ID " + persona_id + " GUARDADO");
+    public EspecialistaResponse updateEspecialista(Long id, EspecialistaRequest especialistaRequest) {
+        Especialista existingEspecialista = especialistaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Especialista no encontrado con ID " + id));
 
-            return EspecialistaResponse.fromEntity(especialista);
+        Persona persona = personaRepository.findById(especialistaRequest.getPersonaId())
+                .orElseThrow(() -> new RuntimeException("Persona no encontrada con ID " + especialistaRequest.getPersonaId()));
 
-        } catch (Exception e) {
-            throw new RuntimeException("Error al guardar el especialista", e);  // Manejo de errores
-        }
+        Tecnica tecnica = tecnicaRepository.findById(especialistaRequest.getTecnicaId())
+                .orElseThrow(() -> new RuntimeException("Técnica no encontrada con ID " + especialistaRequest.getTecnicaId()));
+
+        existingEspecialista.setPersona(persona);
+        existingEspecialista.setTecnica(tecnica);
+
+        Especialista updatedEspecialista = especialistaRepository.save(existingEspecialista);
+        return EspecialistaResponse.fromEntity(updatedEspecialista);
+    }
+
+    public void deleteEspecialista(Long id) {
+        Especialista especialista = especialistaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Especialista no encontrado con ID " + id));
+        especialistaRepository.delete(especialista);
     }
 }

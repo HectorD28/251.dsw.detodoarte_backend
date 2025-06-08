@@ -1,54 +1,51 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dsw.detodoartebackend.service;
 
 import dsw.detodoartebackend.dto.TecnicaRequest;
 import dsw.detodoartebackend.dto.TecnicaResponse;
 import dsw.detodoartebackend.entity.Tecnica;
 import dsw.detodoartebackend.repository.TecnicaRepository;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class TecnicaService {
 
-    private final TecnicaRepository tecnicaRepository;
+    @Autowired
+    private TecnicaRepository tecnicaRepository;
 
-    public List<TecnicaResponse> obtenerTodasTecnicas() {
-        return tecnicaRepository.findAll()
-                .stream()
-                .map(TecnicaResponse::fromEntity)
-                .collect(Collectors.toList());
+    public List<TecnicaResponse> getAllTecnicas() {
+        List<Tecnica> tecnicas = tecnicaRepository.findAll();
+        return TecnicaResponse.fromEntities(tecnicas);
     }
 
-    public TecnicaResponse guardarTecnica(TecnicaRequest request) {
-        Tecnica tecnica = Tecnica.builder()
-                .nombreTecnica(request.getNombre_tecnica())
-                .build();
-        tecnica = tecnicaRepository.save(tecnica);
-        return TecnicaResponse.fromEntity(tecnica);
-    }
-
-    public TecnicaResponse actualizarTecnica(Long id, TecnicaRequest request) {
+    public TecnicaResponse getTecnicaById(Long id) {
         Tecnica tecnica = tecnicaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Técnica no encontrada"));
-
-        tecnica.setNombreTecnica(request.getNombre_tecnica());
-        tecnica = tecnicaRepository.save(tecnica);
-
+                .orElseThrow(() -> new RuntimeException("Técnica no encontrada con ID " + id));
         return TecnicaResponse.fromEntity(tecnica);
     }
 
-    public void eliminarTecnica(Long id) {
-        tecnicaRepository.deleteById(id);
+    public TecnicaResponse createTecnica(TecnicaRequest tecnicaRequest) {
+        Tecnica tecnica = Tecnica.builder()
+                .nombreTecnica(tecnicaRequest.getNombreTecnica())
+                .build();
+        Tecnica savedTecnica = tecnicaRepository.save(tecnica);
+        return TecnicaResponse.fromEntity(savedTecnica);
+    }
+
+    public TecnicaResponse updateTecnica(Long id, TecnicaRequest tecnicaRequest) {
+        Tecnica existingTecnica = tecnicaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Técnica no encontrada con ID " + id));
+
+        existingTecnica.setNombreTecnica(tecnicaRequest.getNombreTecnica());
+        Tecnica updatedTecnica = tecnicaRepository.save(existingTecnica);
+        return TecnicaResponse.fromEntity(updatedTecnica);
+    }
+
+    public void deleteTecnica(Long id) {
+        Tecnica tecnica = tecnicaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Técnica no encontrada con ID " + id));
+        tecnicaRepository.delete(tecnica);
     }
 }
-
-
-

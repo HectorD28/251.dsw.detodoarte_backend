@@ -1,7 +1,6 @@
 
 package dsw.detodoartebackend.dto;
 
-import dsw.detodoartebackend.entity.Artista;
 import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SolicitudExposicionRequest {
-    //private Long id_solicitud;
+    //private Long id_solicitud_exposicion;
     private LocalDate fecha_emision_solicitud;
     private String estado_solicitud;
     private String comentarios;

@@ -1,61 +1,95 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dsw.detodoartebackend.controller;
 
 import dsw.detodoartebackend.dto.EspecialistaRequest;
 import dsw.detodoartebackend.dto.EspecialistaResponse;
 import dsw.detodoartebackend.service.EspecialistaService;
 import dsw.detodoartebackend.utils.ErrorResponse;
-import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/api/especialista")
+@RequestMapping("/api/especialistas")
 public class EspecialistaController {
-    private final Logger logger=LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     private EspecialistaService especialistaService;
 
-    @GetMapping
-    public ResponseEntity<?> obtenerTodasEspecialistas() {
-        List<EspecialistaResponse> listaEspecialistaResponse = null;
+    // Obtener todos los especialistas
+    @GetMapping("/obtener")
+    public ResponseEntity<?> getAllEspecialistas() {
         try {
-            listaEspecialistaResponse = especialistaService.obtenerTodasEspecialistas(); 
-        }catch(Exception e){
-            logger.error("Error inesperado",e);
-            return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        if(listaEspecialistaResponse.isEmpty())
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorResponse.builder().message("Persona not found").build());
-        return ResponseEntity.ok(listaEspecialistaResponse); 
-    }
-    @PostMapping()
-    public ResponseEntity<?> registrarEspecialista(@RequestBody EspecialistaRequest especialistaRequest) {
-        logger.info(">insert " + especialistaRequest.toString());
-        EspecialistaResponse especialistaResponse;
-        try {
-            especialistaResponse = especialistaService.guardarEspecialista(especialistaRequest);
+            List<EspecialistaResponse> especialistas = especialistaService.getAllEspecialistas();
+            if (especialistas.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            }
+            return ResponseEntity.ok(especialistas);
         } catch (Exception e) {
-            logger.error("Error inesperado", e);
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error inesperado");
         }
+    }
 
-        if (especialistaResponse == null) {
+    // Obtener especialista por ID
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getEspecialistaById(@PathVariable Long id) {
+        try {
+            EspecialistaResponse especialista = especialistaService.getEspecialistaById(id);
+            return ResponseEntity.ok(especialista);
+        } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(ErrorResponse.builder().message("No se pudo registrar el especialista").build());
+                    .body(ErrorResponse.builder().message(e.getMessage()).build());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error inesperado");
         }
+    }
 
-        return ResponseEntity.ok(especialistaResponse);
+    // Crear nuevo especialista
+    @PostMapping("/crear")
+    public ResponseEntity<?> createEspecialista(@RequestBody EspecialistaRequest especialistaRequest) {
+        try {
+            EspecialistaResponse nuevoEspecialista = especialistaService.createEspecialista(especialistaRequest);
+            return ResponseEntity.status(HttpStatus.CREATED).body(nuevoEspecialista);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(ErrorResponse.builder().message(e.getMessage()).build());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error inesperado");
+        }
+    }
+
+    // Actualizar especialista
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateEspecialista(@PathVariable Long id, @RequestBody EspecialistaRequest especialistaRequest) {
+        try {
+            EspecialistaResponse updatedEspecialista = especialistaService.updateEspecialista(id, especialistaRequest);
+            return ResponseEntity.ok(updatedEspecialista);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(ErrorResponse.builder().message(e.getMessage()).build());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error inesperado");
+        }
+    }
+
+    // Eliminar especialista
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteEspecialista(@PathVariable Long id) {
+        try {
+            especialistaService.deleteEspecialista(id);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(ErrorResponse.builder().message(e.getMessage()).build());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error inesperado");
+        }
     }
 }

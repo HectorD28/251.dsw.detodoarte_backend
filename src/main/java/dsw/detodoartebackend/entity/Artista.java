@@ -19,12 +19,8 @@ public class Artista {
     @Column(name = "id_artista")
     private Long idArtista;
 
-    @OneToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
-    @JoinColumn(name = "persona_id",referencedColumnName="persona_id", unique = true)
-    private Personas persona; 
-
-    public Artista(Personas persona){
-        this.persona=persona;
-    };
-    
+    // Relación Muchos a Uno con Persona (Cada artista tiene una persona asociada)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "persona_id", referencedColumnName = "persona_id", nullable = false)
+    private Persona persona;  // Relación con la tabla 'personas'
 }

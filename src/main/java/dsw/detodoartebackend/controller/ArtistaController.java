@@ -1,65 +1,95 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
 package dsw.detodoartebackend.controller;
 
 import dsw.detodoartebackend.dto.ArtistaRequest;
 import dsw.detodoartebackend.dto.ArtistaResponse;
 import dsw.detodoartebackend.service.ArtistaService;
 import dsw.detodoartebackend.utils.ErrorResponse;
-import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/artistas")
 public class ArtistaController {
-    private final Logger logger=LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     private ArtistaService artistaService;
 
-    @GetMapping
-    public ResponseEntity<?> obtenerTodasArtistas() {
-        List<ArtistaResponse> listaArtistaResponse = null;
+    // Obtener todos los artistas
+    @GetMapping("/obtener")
+    public ResponseEntity<?> getAllArtistas() {
         try {
-            listaArtistaResponse = artistaService.obtenerTodasArtistas(); 
-        }catch(Exception e){
-            logger.error("Error inesperado",e);
-            return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        if(listaArtistaResponse.isEmpty())
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorResponse.builder().message("Persona not found").build());
-        return ResponseEntity.ok(listaArtistaResponse); 
-    }
-    @PostMapping("/crear")
-    public ResponseEntity<?> registrarArtista(@RequestBody ArtistaRequest artistaRequest) {
-        logger.info(">insert " + artistaRequest.toString());
-        ArtistaResponse artistaResponse;
-        try {
-            artistaResponse = artistaService.guardarArtista(artistaRequest);
+            List<ArtistaResponse> artistas = artistaService.getAllArtistas();
+            if (artistas.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            }
+            return ResponseEntity.ok(artistas);
         } catch (Exception e) {
-            logger.error("Error inesperado", e);
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error inesperado");
         }
-
-        if (artistaResponse == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(ErrorResponse.builder().message("No se pudo registrar el artista").build());
-        }
-
-        return ResponseEntity.ok(artistaResponse);
     }
 
+    // Obtener artista por ID
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getArtistaById(@PathVariable Long id) {
+        try {
+            ArtistaResponse artista = artistaService.getArtistaById(id);
+            return ResponseEntity.ok(artista);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(ErrorResponse.builder().message(e.getMessage()).build());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error inesperado");
+        }
+    }
+
+    // Crear nuevo artista
+    @PostMapping("/crear")
+    public ResponseEntity<?> createArtista(@RequestBody ArtistaRequest artistaRequest) {
+        try {
+            ArtistaResponse nuevoArtista = artistaService.createArtista(artistaRequest);
+            return ResponseEntity.status(HttpStatus.CREATED).body(nuevoArtista);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(ErrorResponse.builder().message(e.getMessage()).build());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error inesperado");
+        }
+    }
+
+    // Actualizar artista
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateArtista(@PathVariable Long id, @RequestBody ArtistaRequest artistaRequest) {
+        try {
+            ArtistaResponse updatedArtista = artistaService.updateArtista(id, artistaRequest);
+            return ResponseEntity.ok(updatedArtista);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(ErrorResponse.builder().message(e.getMessage()).build());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error inesperado");
+        }
+    }
+
+    // Eliminar artista
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteArtista(@PathVariable Long id) {
+        try {
+            artistaService.deleteArtista(id);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(ErrorResponse.builder().message(e.getMessage()).build());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error inesperado");
+        }
+    }
 }
-
-

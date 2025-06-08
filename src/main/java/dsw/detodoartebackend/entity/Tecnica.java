@@ -1,19 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dsw.detodoartebackend.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name = "tecnicas")
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Table(name="tecnicas")
 public class Tecnica {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_tecnica")
@@ -22,5 +22,3 @@ public class Tecnica {
     @Column(name = "nombre_tecnica")
     private String nombreTecnica;
 }
-
-

@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SolicitudExposicionResponse {
-    private Long id_solicitud;
+    private Long id_solicitud_exposicion;
     private LocalDate fecha_emision_solicitud;
     private String estadoSolicitud;
     private String comentarios;
@@ -24,7 +24,7 @@ public class SolicitudExposicionResponse {
     
        public static SolicitudExposicionResponse fromEntity(SolicitudExposicion solicitudexposicion) {
         return SolicitudExposicionResponse.builder()
-            .id_solicitud(solicitudexposicion.getIdSolicitud())
+            .id_solicitud_exposicion(solicitudexposicion.getIdSolicitudExposicion())
             .fecha_emision_solicitud(solicitudexposicion.getFechaEmisionSolicitud())
             .estadoSolicitud(solicitudexposicion.getEstadoSolicitud())
             .comentarios(solicitudexposicion.getComentarios())

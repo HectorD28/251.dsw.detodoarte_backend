@@ -1,12 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
 package dsw.detodoartebackend.dto;
 
 import dsw.detodoartebackend.entity.Artista;
-import dsw.detodoartebackend.entity.Personas;
+import dsw.detodoartebackend.entity.Persona;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
@@ -19,15 +14,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ArtistaResponse {
-    private long id_artista;
-    private Personas persona;
-
+    private Long idArtista;
+    private Persona persona; // Incluir el objeto completo de Persona
 
     public static ArtistaResponse fromEntity(Artista artista) {
         return ArtistaResponse.builder()
-            .id_artista(artista.getIdArtista())
-            .persona(artista.getPersona())
-            .build();    
+                .idArtista(artista.getIdArtista())
+                .persona(artista.getPersona()) // Incluir la persona completa
+                .build();
     }
 
     public static List<ArtistaResponse> fromEntities(List<Artista> artistas) {

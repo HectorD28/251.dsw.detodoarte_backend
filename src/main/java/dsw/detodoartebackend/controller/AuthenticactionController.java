@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import dsw.detodoartebackend.entity.Personas;
+import dsw.detodoartebackend.entity.Persona;
 import dsw.detodoartebackend.security.TokenService;
 import dsw.detodoartebackend.security.DatosJWTToken;
 import org.springframework.http.HttpStatus;
@@ -44,7 +44,7 @@ public class AuthenticactionController {
             System.out.println("Contraseña ingresada: " + datos.contrasena());
             System.out.println("Contraseña en BD: " + usuarioAutenticado.getPrincipal());
             System.out.println(datos.username()+"parte2");
-            var JWTtoken = tokenService.generarToken((Personas) usuarioAutenticado.getPrincipal());
+            var JWTtoken = tokenService.generarToken((Persona) usuarioAutenticado.getPrincipal());
             return ResponseEntity.ok(new DatosJWTToken(JWTtoken));
         } catch (BadCredentialsException ex) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales inválidas");
