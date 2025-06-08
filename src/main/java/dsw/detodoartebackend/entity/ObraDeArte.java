@@ -19,7 +19,7 @@ public class ObraDeArte {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_obra")
-    private Long idObra;
+    private Long obraId;
 
     @Column(name = "titulo")
     private String titulo;
@@ -46,35 +46,12 @@ public class ObraDeArte {
     @Column(name = "cantidad_visualizaciones")
     private Integer cantidadVisualizaciones;
 
-<<<<<<< HEAD
     @Column(name = "ruta_imagen")
     private String rutaImagen;  // Ruta de la imagen de la obra
-=======
+
     @Column(name = "stock")
     private Integer stock;
     
-    
-    
-    public synchronized boolean reducirStock(int cantidad) {
-        if (stock >= cantidad) {
-            this.stock -= cantidad;
-            return true;
-        }
-        return false;
-    }
-
-    public synchronized void restaurarStock(int cantidad) {
-        this.stock += cantidad;
-    }
-
-    public synchronized void confirmarCompra(int cantidad) {
-        if (this.stock >= cantidad) {
-            this.stock -= cantidad;
-        }
-    }
-
-    public synchronized void liberarStock(int cantidad) {
-        this.restaurarStock(cantidad);
-    }
->>>>>>> 54190686d3925c64f2b8a30e6257b3af79f631ca
+    @Column(name = "estado_publicacion")
+    private String estado_publicacion;
 }
