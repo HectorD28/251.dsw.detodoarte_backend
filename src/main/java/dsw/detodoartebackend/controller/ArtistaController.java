@@ -64,7 +64,7 @@ public class ArtistaController {
     }
 
     // Actualizar artista
-    @PutMapping("/{id}")
+    @PutMapping("/edit/{id}")
     public ResponseEntity<?> updateArtista(@PathVariable Long id, @RequestBody ArtistaRequest artistaRequest) {
         try {
             ArtistaResponse updatedArtista = artistaService.updateArtista(id, artistaRequest);

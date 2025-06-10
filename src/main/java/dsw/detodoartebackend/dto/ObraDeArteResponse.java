@@ -18,9 +18,13 @@ public class ObraDeArteResponse {
     private String titulo;
     private LocalDate fechaRealizacion;
     private String dimensiones;
-    private TecnicaResponse tecnica;  // Información completa de la Técnica
-    private ArtistaResponse artista;  // Información completa del Artista
+    private TecnicaResponse tecnicaId;  // Información completa de la Técnica
+    private ArtistaResponse artistaId;  // Información completa del Artista
     private Double precio;
+    private Integer cantidadVisualizaciones;
+    private String rutaImagen;  // Ruta de la imagen de la obra
+    private Integer stock;  
+    private String estado_publicacion;
 
     public static ObraDeArteResponse fromEntity(ObraDeArte obra) {
         return ObraDeArteResponse.builder()
@@ -28,9 +32,12 @@ public class ObraDeArteResponse {
                 .titulo(obra.getTitulo())
                 .fechaRealizacion(obra.getFechaRealizacion())
                 .dimensiones(obra.getDimensiones())
-                .tecnica(TecnicaResponse.fromEntity(obra.getTecnica()))
-                .artista(ArtistaResponse.fromEntity(obra.getArtista()))
+                .tecnicaId(TecnicaResponse.fromEntity(obra.getTecnica()))
+                .artistaId(ArtistaResponse.fromEntity(obra.getArtista()))
                 .precio(obra.getPrecio())
+                .cantidadVisualizaciones(obra.getCantidadVisualizaciones())
+                .rutaImagen(obra.getRutaImagen())
+                .stock(obra.getStock())
                 .build();
     }
 

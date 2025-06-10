@@ -64,7 +64,7 @@ public class EspecialistaController {
     }
 
     // Actualizar especialista
-    @PutMapping("/{id}")
+    @PutMapping("/edit/{id}")
     public ResponseEntity<?> updateEspecialista(@PathVariable Long id, @RequestBody EspecialistaRequest especialistaRequest) {
         try {
             EspecialistaResponse updatedEspecialista = especialistaService.updateEspecialista(id, especialistaRequest);
