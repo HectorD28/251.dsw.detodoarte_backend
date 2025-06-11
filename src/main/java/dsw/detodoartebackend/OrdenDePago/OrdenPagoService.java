@@ -84,7 +84,7 @@ public class OrdenPagoService {
 
     @Transactional
     public void expirarOrden(Long idOrden) {
-        OrdenDePago orden = ordenPagoRepository.findById(idOrden)
+        OrdenDePago orden = ordenPagoRepository.findByIdOrden(idOrden)
                 .orElseThrow(() -> new RuntimeException("Orden no encontrada"));
 
         if (orden.getEstado() != EstadoOrden.PENDIENTE) {
@@ -93,6 +93,7 @@ public class OrdenPagoService {
 
         // Restaurar el stock de los productos asociados
         for (ProductoOrden productoOrden : orden.getProductos()) {
+            
             if (productoOrden.isStockDescontado()) {
                 productoOrden.getProducto().restaurarStock(productoOrden.getCantidad());
                 productoOrden.setStockDescontado(false);
@@ -117,7 +118,7 @@ public class OrdenPagoService {
 
 
     public OrdenDePago obtenerPorId(Long idOrden) {
-        return ordenPagoRepository.findById(idOrden)
+        return ordenPagoRepository.findByIdOrden(idOrden)
                 .orElseThrow(() -> new RuntimeException("Orden no encontrada"));
     }
 

@@ -14,8 +14,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface OrdenPagoRepository extends JpaRepository<OrdenDePago, Long> {
     
-    @EntityGraph(attributePaths = {"obras"})
-    Optional<OrdenDePago> findById(Long idOrden);
+    @EntityGraph(attributePaths = {"productos"})
+    Optional<OrdenDePago> findByIdOrden(Long idOrden);
 
     List<OrdenDePago> findByEstadoAndFechaExpiracionBefore(
             EstadoOrden estado, 

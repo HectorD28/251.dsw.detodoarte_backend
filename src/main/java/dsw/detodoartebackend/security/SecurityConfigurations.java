@@ -35,6 +35,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST, "/api/personas").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/artistas/crear").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/especialistas/crear").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/carrito/agregar/{idOrden}").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/obras/obtener").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/tecnicas/obtener").permitAll()
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html/**").permitAll()
