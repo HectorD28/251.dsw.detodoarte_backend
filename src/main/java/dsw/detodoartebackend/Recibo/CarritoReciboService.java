@@ -32,7 +32,7 @@ public class CarritoReciboService {
             for (ProductoOrden productoOrden : productosOrdenados) {
                 lista.add(new CarritoReciboDTO(
                         productoOrden.getTipo(),
-                        productoOrden.getProductoNombre(),
+                        productoOrden.getProducto_nombre(),
                         productoOrden.getCantidad(),
                         productoOrden.getSubtotal()
                 ));

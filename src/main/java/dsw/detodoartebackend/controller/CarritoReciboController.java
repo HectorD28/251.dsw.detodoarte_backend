@@ -24,7 +24,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/carrito")
+@RequestMapping("/api/carrito")
 public class CarritoReciboController {
 
     private final CarritoReciboService carritoReciboService;
@@ -48,7 +48,10 @@ public class CarritoReciboController {
 
     @PostMapping("/agregar/{idOrden}")
     public ResponseEntity<String> agregarOrden(@PathVariable Long idOrden) {
+        System.out.print(idOrden+ " 1");
+        System.out.print(idOrden);
         OrdenDePago orden = ordenDePagoService.obtenerPorId(idOrden);
+        System.out.print(idOrden+ " 2");
 
         if (orden != null) {
             carritoReciboService.agregarOrden(orden);

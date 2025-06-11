@@ -31,7 +31,9 @@ public class ProductoOrden {
     @JsonIgnore
     private ObraDeArte producto;
     
-    private String productoNombre;
+    @JoinColumn(name = "producto_nombre", nullable = false)
+    private String producto_nombre;
+    
     private int cantidad;
     private double precioUnitario;
     private double subtotal;
@@ -52,7 +54,7 @@ public class ProductoOrden {
 
     public ProductoOrden(ObraDeArte producto, int cantidad) {
         this.producto = producto;
-        this.productoNombre = producto.getTitulo();
+        this.producto_nombre = producto.getTitulo();
         this.cantidad = cantidad;
         this.precioUnitario = producto.getPrecio();
         this.subtotal = this.precioUnitario * this.cantidad;

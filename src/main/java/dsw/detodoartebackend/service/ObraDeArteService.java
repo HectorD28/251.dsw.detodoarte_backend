@@ -113,6 +113,7 @@ public class ObraDeArteService {
         return productoRepository.save(producto);
     }
     
+    
     public List<ObraDeArte> buscarPorNombre(String nombre) {
         return productoRepository.findByTituloContainingIgnoreCase(nombre);
     }

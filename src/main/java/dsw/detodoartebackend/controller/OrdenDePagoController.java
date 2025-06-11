@@ -61,6 +61,10 @@ public class OrdenDePagoController {
 
         return "Producto reservado: " + producto.getTitulo()+ ", Cantidad: " + cantidad;
     }
+    
+    
+    
+    
 
 
     // trae todos los productos seleccionados
@@ -123,11 +127,31 @@ public class OrdenDePagoController {
         carrito.clear();
         return "Orden cancelada, stock restaurado";
     }
+    
+    @PostMapping("/cancelar/producto/{idProducto}")
+    public String cancelarProducto(@PathVariable long idProducto) {
+        for (ProductoOrden productoOrden : carrito) {
+            if (productoOrden.getProducto().getObraId()==idProducto) {
+                productoOrden.getProducto().restaurarStock(productoOrden.getCantidad());
+                productoOrden.setStockDescontado(false);
+                obraDeArteService.guardarProducto(productoOrden.getProducto());
+                ordenPagoService.cancelarLiberacionStock(productoOrden);
+                carrito.remove(productoOrden);
+            }
+            
+            
+        }
+        
+        return "Producto cancelado, stock restaurado";
+    }
 
     @GetMapping("/pendientes")
     public List<OrdenDePago> listarOrdenesPendientes() {
         return ordenPagoService.obtenerOrdenesPendientes();
     }
+    
+    
+    
 
 
 
