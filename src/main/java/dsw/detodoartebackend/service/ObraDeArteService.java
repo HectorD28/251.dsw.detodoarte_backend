@@ -54,7 +54,10 @@ public class ObraDeArteService {
                 .tecnica(tecnica)
                 .artista(artista)
                 .precio(request.getPrecio())
-                .cantidadVisualizaciones(0)  // Inicializamos en 0
+                .cantidadVisualizaciones(0)
+                .estado_publicacion("PENDIENTE")
+                .stock(request.getStock())
+                .rutaImagen(request.getRuta_imagen())
                 .build();
 
         ObraDeArte saved = obraDeArteRepository.save(obra);

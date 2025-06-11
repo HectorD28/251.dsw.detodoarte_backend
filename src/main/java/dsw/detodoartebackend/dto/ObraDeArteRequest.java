@@ -18,4 +18,8 @@ public class ObraDeArteRequest {
     private Long id_tecnica;
     private Long id_artista;
     private Double precio;
+    private String ruta_imagen;
+    private Integer cantidad_visualizaciones;
+    private Integer stock;  
+
 }
