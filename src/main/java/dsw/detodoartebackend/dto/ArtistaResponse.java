@@ -15,12 +15,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ArtistaResponse {
     private Long idArtista;
-    private Personas persona; // Incluir el objeto completo de Persona
+    private PersonaResponse persona; // Incluir el objeto completo de Persona
 
     public static ArtistaResponse fromEntity(Artista artista) {
         return ArtistaResponse.builder()
                 .idArtista(artista.getIdArtista())
-                .persona(artista.getPersona()) // Incluir la persona completa
+                .persona(PersonaResponse.fromEntity(artista.getPersona())) // Incluir la persona completa
                 .build();
     }
 

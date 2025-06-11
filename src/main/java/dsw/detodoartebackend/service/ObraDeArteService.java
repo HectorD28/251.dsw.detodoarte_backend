@@ -40,8 +40,17 @@ public class ObraDeArteService {
         List<ObraDeArte> obras = obraDeArteRepository.findByArtista_IdArtista(idArtista);
         return ObraDeArteResponse.fromEntities(obras);
     }
+    
+    public boolean verificarTituloUnico(String titulo) {
+        return !obraDeArteRepository.existsByTitulo(titulo);
+    }
 
     public ObraDeArteResponse guardarObra(ObraDeArteRequest request) {
+        
+        if (!verificarTituloUnico(request.getTitulo())) {
+            throw new RuntimeException("El título de la obra ya existe.");
+        }
+        
         Tecnica tecnica = tecnicaRepository.findById(request.getId_tecnica())
                 .orElseThrow(() -> new RuntimeException("Técnica no encontrada"));
         Artista artista = artistaRepository.findById(request.getId_artista())
@@ -53,7 +62,6 @@ public class ObraDeArteService {
                 .dimensiones(request.getDimensiones())
                 .tecnica(tecnica)
                 .artista(artista)
-                .precio(request.getPrecio())
                 .cantidadVisualizaciones(0)
                 .estado_publicacion("PENDIENTE")
                 .stock(request.getStock())
@@ -68,6 +76,11 @@ public class ObraDeArteService {
         ObraDeArte obraExistente = obraDeArteRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Obra no encontrada con ID " + id));
 
+            // Verificar si el título ha cambiado y si el nuevo título ya existe
+        if (!obraExistente.getTitulo().equals(request.getTitulo()) && !verificarTituloUnico(request.getTitulo())) {
+            throw new RuntimeException("El título de la obra ya existe.");
+        }
+    
         Tecnica tecnica = tecnicaRepository.findById(request.getId_tecnica())
                 .orElseThrow(() -> new RuntimeException("Técnica no encontrada"));
         Artista artista = artistaRepository.findById(request.getId_artista())
