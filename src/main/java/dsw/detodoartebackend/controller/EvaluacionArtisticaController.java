@@ -18,7 +18,6 @@ public class EvaluacionArtisticaController {
     @Autowired
     private EvaluacionArtisticaService evaluacionArtisticaService;
 
-    // Obtener evaluaciones por obra
     @GetMapping("/obra/{idObra}")
     public ResponseEntity<?> getEvaluacionesPorObra(@PathVariable Long idObra) {
         try {
@@ -30,7 +29,6 @@ public class EvaluacionArtisticaController {
         }
     }
 
-    // Crear nueva evaluación artística
     @PostMapping("/crear")
     public ResponseEntity<?> createEvaluacion(@RequestBody EvaluacionArtisticaRequest evaluacionRequest) {
         try {
@@ -45,11 +43,10 @@ public class EvaluacionArtisticaController {
         }
     }
 
-    // Actualizar evaluación artística
-    @PutMapping("/{id}")
-    public ResponseEntity<?> updateEvaluacion(@PathVariable Long id, @RequestBody EvaluacionArtisticaRequest evaluacionRequest) {
+    @PutMapping("/obra/{idObra}")
+    public ResponseEntity<?> updateEvaluacion(@PathVariable Long idObra, @RequestBody EvaluacionArtisticaRequest evaluacionRequest) {
         try {
-            EvaluacionArtisticaResponse updatedEvaluacion = evaluacionArtisticaService.actualizarEvaluacion(id, evaluacionRequest);
+            EvaluacionArtisticaResponse updatedEvaluacion = evaluacionArtisticaService.actualizarEvaluacion(idObra, evaluacionRequest);
             return ResponseEntity.ok(updatedEvaluacion);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -60,11 +57,10 @@ public class EvaluacionArtisticaController {
         }
     }
 
-    // Eliminar evaluación artística
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteEvaluacion(@PathVariable Long id) {
+    @DeleteMapping("/obra/{idObra}")
+    public ResponseEntity<?> deleteEvaluacion(@PathVariable Long idObra) {
         try {
-            evaluacionArtisticaService.eliminarEvaluacion(id);
+            evaluacionArtisticaService.eliminarEvaluacion(idObra);
             return ResponseEntity.noContent().build();
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)

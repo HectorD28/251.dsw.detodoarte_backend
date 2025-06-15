@@ -51,10 +51,18 @@ public class EvaluacionEconomicaService {
         return EvaluacionEconomicaResponse.fromEntity(savedEvaluacion);
     }
 
-    public EvaluacionEconomicaResponse actualizarEvaluacion(Long id, EvaluacionEconomicaRequest request) {
-        EvaluacionEconomica evaluacionExistente = evaluacionEconomicaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Evaluación no encontrada con ID " + id));
+    public EvaluacionEconomicaResponse actualizarEvaluacion(Long idObra, EvaluacionEconomicaRequest request) {
+        // Buscar las evaluaciones relacionadas con la obra
+        List<EvaluacionEconomica> evaluacionesExistentes = evaluacionEconomicaRepository.findByObra_ObraId(idObra);
 
+        if (evaluacionesExistentes.isEmpty()) {
+            throw new RuntimeException("No se encontró ninguna evaluación económica para la obra con ID " + idObra);
+        }
+
+        // Suponemos que solo hay una evaluación económica por obra y especialista
+        EvaluacionEconomica evaluacionExistente = evaluacionesExistentes.get(0);
+
+        // Verificar que la obra y el especialista existan
         ObraDeArte obra = obraDeArteRepository.findById(request.getIdObra())
                 .orElseThrow(() -> new RuntimeException("Obra no encontrada"));
 
@@ -73,9 +81,18 @@ public class EvaluacionEconomicaService {
         return EvaluacionEconomicaResponse.fromEntity(updatedEvaluacion);
     }
 
-    public void eliminarEvaluacion(Long id) {
-        EvaluacionEconomica evaluacion = evaluacionEconomicaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Evaluación no encontrada con ID " + id));
+    public void eliminarEvaluacion(Long idObra) {
+        // Buscar las evaluaciones relacionadas con la obra
+        List<EvaluacionEconomica> evaluacionesExistentes = evaluacionEconomicaRepository.findByObra_ObraId(idObra);
+
+        if (evaluacionesExistentes.isEmpty()) {
+            throw new RuntimeException("No se encontró ninguna evaluación económica para la obra con ID " + idObra);
+        }
+
+        // Suponemos que solo hay una evaluación económica por obra y especialista
+        EvaluacionEconomica evaluacion = evaluacionesExistentes.get(0);
+
         evaluacionEconomicaRepository.delete(evaluacion);
     }
 }
+

@@ -6,6 +6,8 @@ import dsw.detodoartebackend.entity.Tecnica;
 import dsw.detodoartebackend.repository.TecnicaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import dsw.detodoartebackend.entity.ObraDeArte;
+import dsw.detodoartebackend.repository.ObraDeArteRepository;
 
 import java.util.List;
 
@@ -14,6 +16,10 @@ public class TecnicaService {
 
     @Autowired
     private TecnicaRepository tecnicaRepository;
+    
+    @Autowired
+    private ObraDeArteRepository obraDeArteRepository;
+
 
     public List<TecnicaResponse> getAllTecnicas() {
         List<Tecnica> tecnicas = tecnicaRepository.findAll();
@@ -47,5 +53,21 @@ public class TecnicaService {
         Tecnica tecnica = tecnicaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Técnica no encontrada con ID " + id));
         tecnicaRepository.delete(tecnica);
+    }
+    
+    public TecnicaResponse getTecnicaByObraId(Long obraId) {
+        // Buscamos la obra por su ID
+        ObraDeArte obra = obraDeArteRepository.findById(obraId)
+                .orElseThrow(() -> new RuntimeException("Obra no encontrada con ID " + obraId));
+
+        // Obtenemos la técnica asociada a la obra
+        Tecnica tecnica = obra.getTecnica(); // Suponiendo que 'getTecnica()' devuelve la técnica asociada
+
+        if (tecnica == null) {
+            throw new RuntimeException("No se encontró técnica asociada a la obra con ID " + obraId);
+        }
+
+        // Convertimos la técnica a DTO (Data Transfer Object) para enviarla en la respuesta
+        return TecnicaResponse.fromEntity(tecnica);
     }
 }

@@ -25,11 +25,13 @@ public class EvaluacionArtisticaService {
     @Autowired
     private EspecialistaRepository especialistaRepository;
 
+    // Método para obtener las evaluaciones de una obra específica
     public List<EvaluacionArtisticaResponse> getEvaluacionesPorObra(Long idObra) {
         List<EvaluacionArtistica> evaluaciones = evaluacionArtisticaRepository.findByObra_ObraId(idObra);
         return EvaluacionArtisticaResponse.fromEntities(evaluaciones);
     }
 
+    // Método para crear una evaluación artística
     public EvaluacionArtisticaResponse crearEvaluacion(EvaluacionArtisticaRequest request) {
         ObraDeArte obra = obraDeArteRepository.findById(request.getIdObra())
                 .orElseThrow(() -> new RuntimeException("Obra no encontrada"));
@@ -49,10 +51,19 @@ public class EvaluacionArtisticaService {
         return EvaluacionArtisticaResponse.fromEntity(savedEvaluacion);
     }
 
-    public EvaluacionArtisticaResponse actualizarEvaluacion(Long id, EvaluacionArtisticaRequest request) {
-        EvaluacionArtistica evaluacionExistente = evaluacionArtisticaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Evaluación no encontrada con ID " + id));
+    // Método para actualizar la evaluación artística de una obra específica
+    public EvaluacionArtisticaResponse actualizarEvaluacion(Long idObra, EvaluacionArtisticaRequest request) {
+        // Buscar las evaluaciones relacionadas con la obra
+        List<EvaluacionArtistica> evaluacionesExistentes = evaluacionArtisticaRepository.findByObra_ObraId(idObra);
 
+        if (evaluacionesExistentes.isEmpty()) {
+            throw new RuntimeException("No se encontró ninguna evaluación para la obra con ID " + idObra);
+        }
+
+        // Suponemos que solo hay una evaluación por obra y especialista
+        EvaluacionArtistica evaluacionExistente = evaluacionesExistentes.get(0);
+
+        // Verificar que la obra y el especialista existan
         ObraDeArte obra = obraDeArteRepository.findById(request.getIdObra())
                 .orElseThrow(() -> new RuntimeException("Obra no encontrada"));
 
@@ -69,9 +80,19 @@ public class EvaluacionArtisticaService {
         return EvaluacionArtisticaResponse.fromEntity(updatedEvaluacion);
     }
 
-    public void eliminarEvaluacion(Long id) {
-        EvaluacionArtistica evaluacion = evaluacionArtisticaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Evaluación no encontrada con ID " + id));
+    // Método para eliminar la evaluación artística de una obra específica
+    public void eliminarEvaluacion(Long idObra) {
+        // Buscar las evaluaciones relacionadas con la obra
+        List<EvaluacionArtistica> evaluacionesExistentes = evaluacionArtisticaRepository.findByObra_ObraId(idObra);
+
+        if (evaluacionesExistentes.isEmpty()) {
+            throw new RuntimeException("No se encontró ninguna evaluación para la obra con ID " + idObra);
+        }
+
+        // Suponemos que solo hay una evaluación por obra y especialista
+        EvaluacionArtistica evaluacion = evaluacionesExistentes.get(0);
+
         evaluacionArtisticaRepository.delete(evaluacion);
     }
 }
+

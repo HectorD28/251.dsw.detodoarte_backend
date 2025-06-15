@@ -92,4 +92,20 @@ public class TecnicaController {
                     .body("Error inesperado");
         }
     }
+    
+    // Obtener técnica asociada a una obra por ID de la obra
+    @GetMapping("/obra/{obraId}")
+    public ResponseEntity<?> getTecnicaByObraId(@PathVariable Long obraId) {
+        try {
+            // Llamamos al servicio para obtener la técnica asociada a la obra
+            TecnicaResponse tecnica = tecnicaService.getTecnicaByObraId(obraId);
+            return ResponseEntity.ok(tecnica); // Retornamos la técnica
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(ErrorResponse.builder().message(e.getMessage()).build());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error inesperado");
+        }
+    }
 }

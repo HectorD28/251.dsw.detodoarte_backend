@@ -18,7 +18,6 @@ public class EvaluacionEconomicaController {
     @Autowired
     private EvaluacionEconomicaService evaluacionEconomicaService;
 
-    // Obtener evaluaciones por obra
     @GetMapping("/obra/{idObra}")
     public ResponseEntity<?> getEvaluacionesPorObra(@PathVariable Long idObra) {
         try {
@@ -30,7 +29,6 @@ public class EvaluacionEconomicaController {
         }
     }
 
-    // Crear nueva evaluación económica
     @PostMapping("/crear")
     public ResponseEntity<?> createEvaluacion(@RequestBody EvaluacionEconomicaRequest evaluacionRequest) {
         try {
@@ -45,11 +43,10 @@ public class EvaluacionEconomicaController {
         }
     }
 
-    // Actualizar evaluación económica
-    @PutMapping("/{id}")
-    public ResponseEntity<?> updateEvaluacion(@PathVariable Long id, @RequestBody EvaluacionEconomicaRequest evaluacionRequest) {
+    @PutMapping("/obra/{idObra}")
+    public ResponseEntity<?> updateEvaluacion(@PathVariable Long idObra, @RequestBody EvaluacionEconomicaRequest evaluacionRequest) {
         try {
-            EvaluacionEconomicaResponse updatedEvaluacion = evaluacionEconomicaService.actualizarEvaluacion(id, evaluacionRequest);
+            EvaluacionEconomicaResponse updatedEvaluacion = evaluacionEconomicaService.actualizarEvaluacion(idObra, evaluacionRequest);
             return ResponseEntity.ok(updatedEvaluacion);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -60,11 +57,10 @@ public class EvaluacionEconomicaController {
         }
     }
 
-    // Eliminar evaluación económica
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteEvaluacion(@PathVariable Long id) {
+    @DeleteMapping("/obra/{idObra}")
+    public ResponseEntity<?> deleteEvaluacion(@PathVariable Long idObra) {
         try {
-            evaluacionEconomicaService.eliminarEvaluacion(id);
+            evaluacionEconomicaService.eliminarEvaluacion(idObra);
             return ResponseEntity.noContent().build();
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -75,3 +71,4 @@ public class EvaluacionEconomicaController {
         }
     }
 }
+
