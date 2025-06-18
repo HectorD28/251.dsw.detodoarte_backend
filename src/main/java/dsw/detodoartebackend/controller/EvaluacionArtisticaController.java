@@ -70,4 +70,18 @@ public class EvaluacionArtisticaController {
                     .body("Error inesperado");
         }
     }
+    
+    @GetMapping("/todos/{idEspecialista}")
+    public ResponseEntity<?> getTodasLasEvaluacionesArtisticas(@PathVariable Long idEspecialista) {
+        try {
+            List<EvaluacionArtisticaResponse> solicitudes = evaluacionArtisticaService.getSolicitudesDeRevisionArtistica(idEspecialista);
+            if (solicitudes.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); // No hay evaluaciones
+            }
+            return ResponseEntity.ok(solicitudes); // Regresa las solicitudes encontradas
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error inesperado al obtener las evaluaciones artísticas");
+        }
+    }
 }

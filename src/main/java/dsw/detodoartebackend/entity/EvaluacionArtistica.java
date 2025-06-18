@@ -39,4 +39,7 @@ public class EvaluacionArtistica {
 
     @Column(name = "motivo_rechazo")
     private String motivoRechazo;  // Solo si la obra es rechazada
+    
+    @Column(name = "puntaje_final")
+    private Long puntajefinal;
 }

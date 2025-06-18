@@ -2,6 +2,8 @@ package dsw.detodoartebackend.controller;
 
 import dsw.detodoartebackend.dto.EspecialistaRequest;
 import dsw.detodoartebackend.dto.EspecialistaResponse;
+import dsw.detodoartebackend.dto.EvaluacionArtisticaResponse;
+import dsw.detodoartebackend.dto.EvaluacionEconomicaResponse;
 import dsw.detodoartebackend.service.EspecialistaService;
 import dsw.detodoartebackend.utils.ErrorResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +47,21 @@ public class EspecialistaController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error inesperado");
+        }
+    }
+
+    // Obtener especialistas por técnica
+    @GetMapping("/por-tecnica/{idTecnica}")
+    public ResponseEntity<?> getEspecialistasByTecnica(@PathVariable Long idTecnica) {
+        try {
+            List<EspecialistaResponse> especialistas = especialistaService.getEspecialistasByTecnica(idTecnica);
+            if (especialistas.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            }
+            return ResponseEntity.ok(especialistas);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error inesperado al obtener especialistas por técnica");
         }
     }
 

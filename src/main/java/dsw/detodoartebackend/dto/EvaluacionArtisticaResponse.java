@@ -20,6 +20,7 @@ public class EvaluacionArtisticaResponse {
     private LocalDate fechaEvaluacion;
     private String resultado;
     private String motivoRechazo;
+    private Long puntaje_final;
 
     public static EvaluacionArtisticaResponse fromEntity(EvaluacionArtistica evaluacion) {
         return EvaluacionArtisticaResponse.builder()
@@ -29,6 +30,7 @@ public class EvaluacionArtisticaResponse {
                 .fechaEvaluacion(evaluacion.getFechaEvaluacion())
                 .resultado(evaluacion.getResultado())
                 .motivoRechazo(evaluacion.getMotivoRechazo())
+                .puntaje_final(evaluacion.getPuntajefinal())
                 .build();
     }
 

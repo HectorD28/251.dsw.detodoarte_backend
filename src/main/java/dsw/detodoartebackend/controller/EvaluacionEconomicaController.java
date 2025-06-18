@@ -70,5 +70,19 @@ public class EvaluacionEconomicaController {
                     .body("Error inesperado");
         }
     }
+    
+    @GetMapping("/todos/{idEspecialista}")
+    public ResponseEntity<?> getTodasLasEvaluacionesEconomicas(@PathVariable Long idEspecialista) {
+        try {
+            List<EvaluacionEconomicaResponse> solicitudes = evaluacionEconomicaService.getSolicitudesDeRevisionEconomica(idEspecialista);
+            if (solicitudes.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); // No hay evaluaciones
+            }
+            return ResponseEntity.ok(solicitudes); // Regresa las solicitudes encontradas
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error inesperado al obtener las evaluaciones económicas");
+        }
+    }
 }
 

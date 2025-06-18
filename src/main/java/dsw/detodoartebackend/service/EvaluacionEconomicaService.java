@@ -25,6 +25,13 @@ public class EvaluacionEconomicaService {
     @Autowired
     private EspecialistaRepository especialistaRepository;
 
+    public List<EvaluacionEconomicaResponse> getSolicitudesDeRevisionEconomica(Long idEspecialista) {
+        // Obtener evaluaciones económicas pendientes
+        List<EvaluacionEconomica> evaluacionesEconomicas = evaluacionEconomicaRepository.findByEspecialista_IdEspecialista(idEspecialista);
+
+        // Mapear las evaluaciones en el formato adecuado
+        return EvaluacionEconomicaResponse.fromEntities(evaluacionesEconomicas);
+    }
     public List<EvaluacionEconomicaResponse> getEvaluacionesPorObra(Long idObra) {
         List<EvaluacionEconomica> evaluaciones = evaluacionEconomicaRepository.findByObra_ObraId(idObra);
         return EvaluacionEconomicaResponse.fromEntities(evaluaciones);

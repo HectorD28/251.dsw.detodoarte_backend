@@ -25,6 +25,14 @@ public class EvaluacionArtisticaService {
     @Autowired
     private EspecialistaRepository especialistaRepository;
 
+    public List<EvaluacionArtisticaResponse> getSolicitudesDeRevisionArtistica(Long idEspecialista) {
+        // Obtener evaluaciones artísticas pendientes
+        List<EvaluacionArtistica> evaluacionesArtisticas = evaluacionArtisticaRepository.findByEspecialista_IdEspecialista(idEspecialista);
+
+        // Mapear las evaluaciones en el formato adecuado
+        return EvaluacionArtisticaResponse.fromEntities(evaluacionesArtisticas);
+    }
+
     // Método para obtener las evaluaciones de una obra específica
     public List<EvaluacionArtisticaResponse> getEvaluacionesPorObra(Long idObra) {
         List<EvaluacionArtistica> evaluaciones = evaluacionArtisticaRepository.findByObra_ObraId(idObra);
@@ -45,6 +53,7 @@ public class EvaluacionArtisticaService {
                 .fechaEvaluacion(request.getFechaEvaluacion())
                 .resultado(request.getResultado())
                 .motivoRechazo(request.getMotivoRechazo())
+                .puntajefinal(request.getPuntajefinal())
                 .build();
 
         EvaluacionArtistica savedEvaluacion = evaluacionArtisticaRepository.save(evaluacion);
@@ -75,6 +84,7 @@ public class EvaluacionArtisticaService {
         evaluacionExistente.setFechaEvaluacion(request.getFechaEvaluacion());
         evaluacionExistente.setResultado(request.getResultado());
         evaluacionExistente.setMotivoRechazo(request.getMotivoRechazo());
+        evaluacionExistente.setPuntajefinal(request.getPuntajefinal());
 
         EvaluacionArtistica updatedEvaluacion = evaluacionArtisticaRepository.save(evaluacionExistente);
         return EvaluacionArtisticaResponse.fromEntity(updatedEvaluacion);

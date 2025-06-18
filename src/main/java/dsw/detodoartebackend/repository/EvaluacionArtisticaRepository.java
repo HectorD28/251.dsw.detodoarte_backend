@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface EvaluacionArtisticaRepository extends JpaRepository<EvaluacionArtistica, Long> {
     List<EvaluacionArtistica> findByObra_ObraId(Long obraId);
+    List<EvaluacionArtistica> findByEspecialista_IdEspecialista(Long idEspecialista);
+
 }

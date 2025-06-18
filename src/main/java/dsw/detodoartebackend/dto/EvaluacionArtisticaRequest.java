@@ -17,4 +17,5 @@ public class EvaluacionArtisticaRequest {
     private LocalDate fechaEvaluacion;
     private String resultado;
     private String motivoRechazo;
+    private Long puntajefinal;
 }
